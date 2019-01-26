@@ -2,7 +2,7 @@
 [![license](https://img.shields.io/github/license/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/blob/xpack/LICENSE) 
 [![Standard](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com/)
 [![Travis](https://img.shields.io/travis/xpack/update-checker-js.svg?label=linux)](https://travis-ci.org/xpack/update-checker-js)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/t912rpj96aegxcfr?svg=true)](https://ci.appveyor.com/project/ilg-ul/update-checker-js) 
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/2k4rmdt93po3a6r5?svg=true)](https://ci.appveyor.com/project/ilg-ul/update-checker-js) 
 [![GitHub issues](https://img.shields.io/github/issues/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/issues)
 [![GitHub pulls](https://img.shields.io/github/issues-pr/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/pulls)
 
