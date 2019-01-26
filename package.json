@@ -1,0 +1,64 @@
+{
+  "name": "@xpack/update-checker",
+  "version": "1.0.0",
+  "description": "Check if a newer version of a npm package is available",
+  "main": "./index.js",
+  "directories": {
+    "bin": "./bin",
+    "lib": "./lib",
+    "test": "./test"
+  },
+  "bin": {},
+  "scripts": {
+    "prepublishOnly": "standard && npm run test-tap -s",
+    "test": "standard && npm run test-tap -s",
+    "test-coverage": "tap --coverage --reporter=classic --timeout 600 --no-color \"test/tap/*.js\"",
+    "test-tap": "tap --reporter=classic --timeout 300 --no-color \"test/tap/*.js\"",
+    "tap": "tap --reporter=spec --timeout 300 --no-color",
+    "tap-coverage": "tap --coverage --reporter=spec --timeout 300 --no-color",
+    "fix": "standard --fix",
+    "link": "npm link @@ilg/es6-promisifier"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xpack/update-checker-js.git"
+  },
+  "keywords": [
+    "cli",
+    "version",
+    "update"
+  ],
+  "author": {
+    "name": "Liviu Ionescu",
+    "email": "ilg@livius.net",
+    "url": "http://liviusdotnet.wordpress.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xpack/update-checker-js/issues"
+  },
+  "homepage": "https://github.com/xpack/update-checker-js",
+  "dependencies": {
+    "@xpack/es6-promisifier": "~1.0.0",
+    "@xpack/logger": "~2.2.0",
+    "latest-version": "~4.0.0",
+    "semver": "~5.6.0",
+    "is-installed-globally": "0.1.0",
+    "is-path-inside": "2.0.0",
+    "is-ci": "~2.0.0",
+    "async-mkdirp": "~1.2.7",
+    "user-home": "~2.0.0",
+    "del": "~3.0.0"
+  },
+  "devDependencies": {
+    "standard": "~12.0.1",
+    "tap": "~12.4.0",
+    "tar": "~4.4.8"
+  },
+  "peerDependencies": {},
+  "bundledDependencies": [],
+  "optionalDependencies": {},
+  "engines": {
+    "node": ">7.7.0"
+  }
+}
