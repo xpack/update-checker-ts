@@ -79,7 +79,28 @@ async main(argv) {
 }
 ```
 
-## Developer info
+The check is not done if:
+
+- running in a CI environment
+- stdout is not a TTY
+- the process is running as root
+- the program is installed in system locations
+- the `NO_NPM_UPDATE_NOTIFIER` variable is present in the environment
+
+These checks are performed by specialised modules, but it is possible
+to override them by passing boolean properties to the constructor:
+
+- `isCI`
+- `isTTY`
+- `isRunningAsRoot`
+- `isInstalledGlobally`
+- `isInstalledAsRoot`
+
+The valability of the check can also be configured via a property:
+
+- `checkUpdatesIntervalSeconds`
+  
+## Maintainer & Developer info
 
 ### Git repo
 
