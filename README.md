@@ -323,6 +323,11 @@ the `use strict`:
 Note: be sure C style comments are used, C++ styles are not parsed by 
 [ESLint](http://eslint.org).
 
+### Known issues
+
+- more recent versions of "is-installed-globally" fail on Windows; as a 
+workaround, the module is set to "0.1.0".
+
 ### How to publish
 
 * `npm run fix`
