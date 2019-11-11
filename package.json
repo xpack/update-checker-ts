@@ -1,6 +1,6 @@
 {
   "name": "@xpack/update-checker",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Check if a newer version of a npm package is available",
   "main": "./index.js",
   "directories": {
