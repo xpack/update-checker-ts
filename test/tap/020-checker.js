@@ -127,7 +127,7 @@ test('retried immediately', async (t) => {
     isInstalledGlobally: false
   })
 
-  let stat = await uc.readTimestamp()
+  const stat = await uc.readTimestamp()
   t.true(stat !== null, 'has timestamp')
 
   // Rerun immediately, it should not create the promise.
@@ -296,7 +296,7 @@ test('outdated version as root', async (t) => {
   t.match(str, `>>> Run 'npm install ${packageName}' to update. <<<`,
     'recommended command ok')
 
-  let stat = await uc.readTimestamp()
+  const stat = await uc.readTimestamp()
   t.true(stat === null, 'has no timestamp')
 
   t.end()
@@ -311,7 +311,7 @@ test('outdated version NO_NPM_UPDATE_NOTIFIER', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
-    env: { 'NO_NPM_UPDATE_NOTIFIER': '' }, // <-
+    env: { NO_NPM_UPDATE_NOTIFIER: '' }, // <-
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
@@ -321,7 +321,7 @@ test('outdated version NO_NPM_UPDATE_NOTIFIER', async (t) => {
   await uc.initiateVersionRetrieval()
   t.equals(uc.latestVersionPromise, undefined, 'promise not created')
 
-  let stat = await uc.readTimestamp()
+  const stat = await uc.readTimestamp()
   t.true(stat === null, 'has no timestamp')
 
   t.end()
@@ -346,7 +346,7 @@ test('outdated version !isTTY', async (t) => {
   await uc.initiateVersionRetrieval()
   t.equals(uc.latestVersionPromise, undefined, 'promise not created')
 
-  let stat = await uc.readTimestamp()
+  const stat = await uc.readTimestamp()
   t.true(stat === null, 'has no timestamp')
 
   t.end()
@@ -371,7 +371,7 @@ test('outdated version isCI', async (t) => {
   await uc.initiateVersionRetrieval()
   t.equals(uc.latestVersionPromise, undefined, 'promise not created')
 
-  let stat = await uc.readTimestamp()
+  const stat = await uc.readTimestamp()
   t.true(stat === null, 'has no timestamp')
 
   t.end()
@@ -390,7 +390,7 @@ test('outdated version untuned', async (t) => {
   await uc.initiateVersionRetrieval()
   t.equals(uc.latestVersionPromise, undefined, 'promise not created')
 
-  let stat = await uc.readTimestamp()
+  const stat = await uc.readTimestamp()
   t.true(stat === null, 'has no timestamp')
 
   t.end()
