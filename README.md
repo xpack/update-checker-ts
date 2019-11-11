@@ -283,6 +283,8 @@ The continuous integration tests are performed via
 
 To speed up things, the `node_modules` folder is cached between builds.
 
+The tests are performed with node 8, 10, 12.
+
 ### Standard compliance
 
 The module uses ECMAScript 6 class definitions.

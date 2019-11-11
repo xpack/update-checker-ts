@@ -5,7 +5,8 @@
 # async/await supported since v7.x
 environment:
   matrix:
-    - nodejs_version: "9"
+    - nodejs_version: "12"
+    - nodejs_version: "10"
     - nodejs_version: "8"
 
 # set clone depth
@@ -32,7 +33,7 @@ test_script:
   - node --version
   - npm --version
   # run tests
-  - npm test
+  - npm run test
 
 # Don't actually build.
 build: off
