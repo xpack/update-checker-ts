@@ -85,7 +85,7 @@ The check is not done if:
 - stdout is not a TTY
 - the process is running as root
 - the program is installed in system locations
-- the `NO_NPM_UPDATE_NOTIFIER` variable is present in the environment
+- the `NO_NPM_UPDATE_NOTIFIER` variable is present in the environment map
 
 These checks are performed by specialised modules, but it is possible
 to override them by passing boolean properties to the constructor:

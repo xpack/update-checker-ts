@@ -76,7 +76,7 @@ test('outdated version', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
-    env: [],
+    env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
@@ -121,7 +121,7 @@ test('retried immediately', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
-    env: [],
+    env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
@@ -152,7 +152,7 @@ test('retried after age', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
-    env: [],
+    env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
@@ -191,7 +191,7 @@ test('same version', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
-    env: [],
+    env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
@@ -217,7 +217,7 @@ test('outdated version sudo', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
-    env: [],
+    env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: true, // <-
     isInstalledGlobally: false
@@ -246,7 +246,7 @@ test('outdated version global', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
-    env: [],
+    env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: true // <-
@@ -267,6 +267,9 @@ test('outdated version global', async (t) => {
 })
 
 test('outdated version as root', async (t) => {
+  const saved = process.env
+  delete process.env
+
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
@@ -275,11 +278,12 @@ test('outdated version as root', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
-    env: [],
+    // env: {},
     isRunningAsRoot: true, // <-
     isInstalledAsRoot: false,
     isInstalledGlobally: false
   })
+  process.env = saved
 
   await uc.clearTimestamp()
   await uc.initiateVersionRetrieval()
@@ -307,7 +311,7 @@ test('outdated version NO_NPM_UPDATE_NOTIFIER', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
-    env: [ 'NO_NPM_UPDATE_NOTIFIER' ], // <-
+    env: { 'NO_NPM_UPDATE_NOTIFIER': '' }, // <-
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
@@ -332,7 +336,7 @@ test('outdated version !isTTY', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: false, // <-
-    env: [ ],
+    env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
@@ -357,7 +361,7 @@ test('outdated version isCI', async (t) => {
     timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
     isCI: true, // <-
     isTTY: true,
-    env: [ ],
+    env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
