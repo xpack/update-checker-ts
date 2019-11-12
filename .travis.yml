@@ -60,16 +60,5 @@ branches:
 
 script:
   - npm test
-  
-# Unused, kept for just in case.
-
-# after_success:
-#  - bash "${SCRIPT}" after_success
-
-# after_failure:
-#   - bash "${SCRIPT}" after_failure
-  
-# after_script:
-#   - bash "${SCRIPT}" after_script
 
 # -----------------------------------------------------------------------------
