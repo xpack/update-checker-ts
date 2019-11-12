@@ -11,6 +11,12 @@
 A Node.js module with a class to check if a more recent version of
 a npm package is available.
 
+## Maintainer info
+
+This page documents how to use this module in an user application.
+For maintainer information, see the separate
+[README-MAINTAINER](https://github.com/xpack/update-checker-js/blob/master/README-MAINTAINER.md) page.
+
 ## Prerequisites
 
 A recent [Node.js](https://nodejs.org) (>=8.x), since the ECMAScript 6 class
@@ -24,6 +30,7 @@ from the public repository, use `npm` to install it inside the module where
 it is needed:
 
 ```console
+$ cd <npm-package-project>
 $ npm install @xpack/update-checker
 ```
 

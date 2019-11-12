@@ -49,6 +49,9 @@ $ npm install
 $ npm run test
 ```
 
+Note: the test related files are not present on the published package,
+and to access them it is necessary to use the development repository.
+
 A typical test result looks like:
 
 ```console
