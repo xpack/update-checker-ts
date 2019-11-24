@@ -31,7 +31,7 @@
 /*.tgz
 
 # tap
-test
+test/
 coverage/
 
 # nyc test coverage
@@ -43,6 +43,7 @@ coverage/
 # CI
 .travis.yml
 .appveyor.yml
+workflows/
 
 README-MAINTAINER.md
 
