@@ -11,12 +11,6 @@
 A Node.js module with a class to check if a more recent version of
 a npm package is available.
 
-## Maintainer info
-
-This page documents how to use this module in an user application.
-For maintainer information, see the separate
-[README-MAINTAINER](https://github.com/xpack/update-checker-js/blob/master/README-MAINTAINER.md) page.
-
 ## Prerequisites
 
 A recent [Node.js](https://nodejs.org) (>=8.x), since the ECMAScript 6 class
@@ -106,6 +100,13 @@ to override them by passing boolean properties to the constructor:
 The valability of the check can also be configured via a property:
 
 - `checkUpdatesIntervalSeconds`
+
+## Maintainer info
+
+This page documents how to use this module in an user application.
+For maintainer information, see the separate
+[README-MAINTAINER](https://github.com/xpack/update-checker-js/blob/master/README-MAINTAINER.md)
+page.
 
 ## License
 

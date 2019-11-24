@@ -24,7 +24,7 @@ $ sudo npm link
 $ ls -l ${HOME}/.nvm/versions/node/$(node --version)/lib/node_modules/@xpack
 ```
 
-A link to the development folder should be present in the system
+A link to the development folder should be present in the
 `node_modules` folder.
 
 In projects that use this module under development, link back from the
