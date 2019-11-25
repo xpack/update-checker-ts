@@ -1,8 +1,7 @@
 [![npm (scoped)](https://img.shields.io/npm/v/@xpack/update-checker.svg)](https://www.npmjs.com/package/@xpack/update-checker)
 [![license](https://img.shields.io/github/license/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/blob/xpack/LICENSE)
 [![Standard](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com/)
-[![Travis](https://img.shields.io/travis/xpack/update-checker-js.svg?label=linux)](https://travis-ci.org/xpack/update-checker-js)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/2k4rmdt93po3a6r5?svg=true)](https://ci.appveyor.com/project/ilg-ul/update-checker-js)
+[![Actions Status](https://github.com/xpack/update-checker-js/workflows/Node.js%20CI%20on%20Push/badge.svg)](https://github.com/xpack/update-checker-js/actions)
 [![GitHub issues](https://img.shields.io/github/issues/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/issues)
 [![GitHub pulls](https://img.shields.io/github/issues-pr/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/pulls)
 
@@ -194,12 +193,8 @@ Exclusions are marked with the `/* istanbul ignore next */` (https://github.com/
 ### Continuous Integration (CI)
 
 The continuous integration tests are performed via
-[Travis CI](https://travis-ci.org/xpack/update-checker-js) and
-[AppVeyor](https://ci.appveyor.com/project/ilg-ul/update-checker-js).
-
-To speed up things, the `node_modules` folder is cached between builds.
-
-The tests are currently performed with node 8, 10, 12.
+[GitHub Actions](https://github.com/features/actions) on Ubuntu,
+Windows and macOS, using node 8, 10, 12.
 
 ### Standard compliance
 
@@ -219,7 +214,7 @@ To manually fix compliance with the style guide (where possible):
 $ npm run fix
 
 > @xpack/update-checker@1.0.0 fix /Users/ilg/My Files/MacBookPro Projects/xPack/npm-modules/update-checker-js.git
-> standard --fix
+> standard --fix --verbose
 ```
 
 ### Documentation metadata
