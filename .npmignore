@@ -31,20 +31,20 @@
 /*.tgz
 
 # tap
-test/
-coverage/
+/coverage/
+/test/
 
 # nyc test coverage
-.nyc_output/
+/.nyc_output/
 
 # VS Code
-.vscode/
+/.vscode/
 
 # CI
-.travis.yml
-.appveyor.yml
-workflows/
+/.github/workflows/
+/.travis.yml
+/.appveyor.yml
 
-README-MAINTAINER.md
+/README-MAINTAINER.md
 
 #end
