@@ -4,6 +4,10 @@ Changes in reverse chronological order.
 
 Refer to GitHub [issues](https://github.com/xpack/update-checker-js/issues).
 
+## v1.1.2 (2020-12-11)
+
+- bump dependencies
+
 ## v1.1.1 (2019-11-25)
 
 - tweak message, update silently ignored
