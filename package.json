@@ -31,29 +31,29 @@
   "author": {
     "name": "Liviu Ionescu",
     "email": "ilg@livius.net",
-    "url": "http://liviusdotnet.wordpress.com"
+    "url": "https://github.com/ilg-ul/"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xpack/update-checker-js/issues"
+    "url": "https://github.com/xpack/update-checker-js/issues/"
   },
   "homepage": "https://github.com/xpack/update-checker-js",
   "dependencies": {
-    "@xpack/es6-promisifier": "~1.0.0",
-    "@xpack/logger": "~2.2.0",
+    "@xpack/es6-promisifier": "^1.0.1",
+    "@xpack/logger": "^3.0.0",
     "latest-version": "^5.1.0",
-    "semver": "^6.3.0",
+    "semver": "^7.3.4",
     "is-installed-globally": "0.1.0",
     "is-path-inside": "^3.0.2",
     "is-ci": "^2.0.0",
     "async-mkdirp": "^1.2.7",
     "user-home": "^2.0.0",
-    "del": "^5.1.0"
+    "del": "^6.0.0"
   },
   "devDependencies": {
-    "standard": "^14.3.1",
-    "tap": "^14.9.2",
-    "tar": "^5.0.5"
+    "standard": "^16.0.3",
+    "tap": "^14.11.0",
+    "tar": "^6.0.5"
   },
   "peerDependencies": {},
   "bundledDependencies": [],
