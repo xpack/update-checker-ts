@@ -2,7 +2,7 @@
 
 Changes in reverse chronological order.
 
-Refer to GitHub [issues](https://github.com/xpack/update-checker-js/issues).
+Refer to GitHub [issues](https://github.com/xpack/update-checker-js/issues/).
 
 ## v1.1.2 (2020-12-11)
 

@@ -246,6 +246,10 @@ workaround, the module is locked to "0.1.0".
 - update `CHANGELOG.md`; commit with a message like _CHANGELOG: prepare v1.2.3_
 - `npm version patch` (bug fixes), `npm version minor` (compatible API
   additions), `npm version major` (incompatible API changes)
+- `npm pack` and check the content
 - push all changes to GitHub; this should trigger CI
-- wait for CI tests to complete
+- **wait for CI tests to complete**
 - `npm publish` (use `--access public` when publishing for the first time)
+
+Check if the version is present at
+[xpm Versions](https://www.npmjs.com/package/@xpack/update-checker?activeTab=versions).
