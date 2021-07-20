@@ -39,7 +39,6 @@
   },
   "homepage": "https://github.com/xpack/update-checker-js",
   "dependencies": {
-    "@xpack/es6-promisifier": "^1.0.1",
     "@xpack/logger": "^3.0.0",
     "latest-version": "^5.1.0",
     "semver": "^7.3.4",
