@@ -396,4 +396,57 @@ test('outdated version untuned', async (t) => {
   t.end()
 })
 
+test('missing package', async (t) => {
+  const mockLog = new MockLog()
+  const uc = new UpdateChecker({
+    log: mockLog,
+    packageName: '@xpack/no-such-package',
+    packageVersion: '0.0.0',
+    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    isCI: false,
+    isTTY: true,
+    env: {},
+    isRunningAsRoot: false,
+    isInstalledAsRoot: false,
+    isInstalledGlobally: false
+  })
+
+  await uc.clearTimestamp()
+  await uc.initiateVersionRetrieval()
+  t.ok(uc.latestVersionPromise !== undefined, 'promise created')
+
+  await uc.notifyIfUpdateIsAvailable()
+  t.ok(uc.returnedError !== undefined, 'has error')
+  // console.log(uc.returnedError)
+
+  t.end()
+})
+
+test('missing package debug', async (t) => {
+  const mockLog = new MockLog()
+  mockLog.isDebug = true
+  const uc = new UpdateChecker({
+    log: mockLog,
+    packageName: '@xpack/no-such-package',
+    packageVersion: '0.0.0',
+    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    isCI: false,
+    isTTY: true,
+    env: {},
+    isRunningAsRoot: false,
+    isInstalledAsRoot: false,
+    isInstalledGlobally: false
+  })
+
+  await uc.clearTimestamp()
+  await uc.initiateVersionRetrieval()
+  t.ok(uc.latestVersionPromise !== undefined, 'promise created')
+
+  await uc.notifyIfUpdateIsAvailable()
+  t.ok(uc.returnedError !== undefined, 'has error')
+  // console.log(uc.returnedError.message)
+
+  t.end()
+})
+
 // ----------------------------------------------------------------------------

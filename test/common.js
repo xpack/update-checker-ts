@@ -38,6 +38,12 @@ const util = require('util')
 class MockLog {
   constructor () {
     this.lines = []
+    this.isDebug = false
+  }
+
+  warning (msg = '', ...args) {
+    const str = util.format(msg, ...args)
+    this.lines.push('warning: ' + str)
   }
 
   info (msg = '', ...args) {
