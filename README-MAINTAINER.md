@@ -2,7 +2,7 @@
 [![license](https://img.shields.io/github/license/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/blob/xpack/LICENSE)
 [![Standard](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com/)
 [![Actions Status](https://github.com/xpack/update-checker-js/workflows/Node.js%20CI%20on%20Push/badge.svg)](https://github.com/xpack/update-checker-js/actions)
-[![GitHub issues](https://img.shields.io/github/issues/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/issues)
+[![GitHub issues](https://img.shields.io/github/issues/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/issues/)
 [![GitHub pulls](https://img.shields.io/github/issues-pr/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/pulls)
 
 ## update-checker.js - maintainer info
@@ -15,12 +15,12 @@ For the user information, see the
 
 ### Git repo
 
-```console
-$ git clone https://github.com/xpack/update-checker-js.git update-checker-js.git
-$ cd update-checker-js.git
-$ npm install
-$ sudo npm link
-$ ls -l ${HOME}/.nvm/versions/node/$(node --version)/lib/node_modules/@xpack
+```sh
+git clone https://github.com/xpack/update-checker-js.git update-checker-js.git
+cd update-checker-js.git
+npm install
+sudo npm link
+ls -l ${HOME}/.nvm/versions/node/$(node --version)/lib/node_modules/@xpack
 ```
 
 A link to the development folder should be present in the
@@ -29,9 +29,9 @@ A link to the development folder should be present in the
 In projects that use this module under development, link back from the
 global location:
 
-```console
-$ cd <project-folder>
-$ npm link @xpack/update-checker
+```sh
+cd <project-folder>
+npm link @xpack/update-checker
 ```
 
 ### Tests
@@ -42,10 +42,10 @@ The tests use the [`node-tap`](http://www.node-tap.org) framework
 As for any `npm` package, the standard way to run the project tests is via
 `npm test`:
 
-```console
-$ cd update-checker-js.git
-$ npm install
-$ npm run test
+```sh
+cd update-checker-js.git
+npm install
+npm run test
 ```
 
 Note: the test related files are not present on the published package,
@@ -243,7 +243,7 @@ workaround, the module is locked to "0.1.0".
 - `npm run fix`
 - commit all changes
 - `npm run test-coverage`
-- update `CHANGELOG.md`; commit with a message like _CHANGELOG: prepare v1.2.3_
+- update `CHANGELOG.md`; commit with a message like _CHANGELOG: prepare v1.2.0_
 - `npm version patch` (bug fixes), `npm version minor` (compatible API
   additions), `npm version major` (incompatible API changes)
 - `npm pack` and check the content

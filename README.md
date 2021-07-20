@@ -2,7 +2,7 @@
 [![license](https://img.shields.io/github/license/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/blob/xpack/LICENSE)
 [![Standard](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com/)
 [![Actions Status](https://github.com/xpack/update-checker-js/workflows/Node.js%20CI%20on%20Push/badge.svg)](https://github.com/xpack/update-checker-js/actions)
-[![GitHub issues](https://img.shields.io/github/issues/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/issues)
+[![GitHub issues](https://img.shields.io/github/issues/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/issues/)
 [![GitHub pulls](https://img.shields.io/github/issues-pr/xpack/update-checker-js.svg)](https://github.com/xpack/update-checker-js/pulls)
 
 ## Check if a newer version of a `npm` package is available
@@ -12,7 +12,7 @@ a npm package is available.
 
 ## Prerequisites
 
-A recent [Node.js](https://nodejs.org) (>=8.x), since the ECMAScript 6 class
+A recent [Node.js](https://nodejs.org) (>=10.x), since the ECMAScript 6 class
 syntax is used.
 
 ## Easy install
@@ -22,9 +22,9 @@ The module is available as
 from the public repository, use `npm` to install it inside the module where
 it is needed:
 
-```console
-$ cd <npm-package-project>
-$ npm install @xpack/update-checker
+```sh
+cd <npm-package-project>
+npm install @xpack/update-checker
 ```
 
 The module does not provide any executables, and generally there are few
@@ -41,8 +41,8 @@ directly or custom class can be derived from it for custom behaviour.
 
 A typical use case is a CLI application.
 
-The logger must have at least the `log.info()`, `log.debug()` and
-`log.trace()` methods; a good candidate is a logger derived from
+The logger must have at least the `log.warning()`, `log.info()`, `log.debug()`,
+and `log.trace()` methods; a good candidate is a logger derived from
 `@xpack/logger`.
 
 Example:
@@ -111,4 +111,4 @@ page.
 
 The original content is released under the
 [MIT License](https://opensource.org/licenses/MIT), with all rights
-reserved to [Liviu Ionescu](https://github.com/ilg-ul).
+reserved to [Liviu Ionescu](https://github.com/ilg-ul/).
