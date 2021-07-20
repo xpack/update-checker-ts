@@ -46,7 +46,6 @@
     "is-path-inside": "^3.0.2",
     "is-ci": "^2.0.0",
     "make-dir": "^3.1.0",
-    "user-home": "^2.0.0",
     "del": "^6.0.0"
   },
   "devDependencies": {
