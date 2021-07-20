@@ -52,8 +52,8 @@ const defaultCheckUpdatesIntervalSeconds = 24 * 60 * 60
 // ----------------------------------------------------------------------------
 
 test('asserts', (t) => {
-  t.true(UpdateChecker !== undefined, 'UpdateChecker is defined')
-  t.true(MockLog !== undefined, 'MockLog is defined')
+  t.ok(UpdateChecker !== undefined, 'UpdateChecker is defined')
+  t.ok(MockLog !== undefined, 'MockLog is defined')
 
   t.end()
 })
@@ -66,7 +66,7 @@ test('constructor with values', (t) => {
     packageVersion: '1.2.3',
     timestampsFolderAbsolutePath: 'my-path'
   })
-  t.true(ck, 'created')
+  t.ok(ck, 'created')
   t.match(mockLog.lines[0], 'UpdateChecker.constructor()', 'logged')
   t.equal(ck.packageName, 'my-name', 'name ok')
   t.equal(ck.packageVersion, '1.2.3', 'version ok')
@@ -74,7 +74,7 @@ test('constructor with values', (t) => {
   const filePath = path.join('my-path', 'my-name' + timestampSuffix)
   t.equal(ck.timestampFileAbsolutePath, filePath, 'file path ok')
 
-  t.true(ck.timestampFileAbsolutePath.endsWith(timestampSuffix),
+  t.ok(ck.timestampFileAbsolutePath.endsWith(timestampSuffix),
     'file suffix ok')
   t.equal(ck.checkUpdatesIntervalMilliseconds,
     defaultCheckUpdatesIntervalSeconds * 1000,

@@ -61,8 +61,8 @@ function sleep (ms) {
 // ----------------------------------------------------------------------------
 
 test('asserts', (t) => {
-  t.true(UpdateChecker !== undefined, 'UpdateChecker is defined')
-  t.true(MockLog !== undefined, 'MockLog is defined')
+  t.ok(UpdateChecker !== undefined, 'UpdateChecker is defined')
+  t.ok(MockLog !== undefined, 'MockLog is defined')
 
   t.end()
 })
@@ -84,10 +84,10 @@ test('outdated version', async (t) => {
 
   await uc.clearTimestamp()
   let stat = await uc.readTimestamp()
-  t.true(stat === null, 'has no timestamp')
+  t.ok(stat === null, 'has no timestamp')
 
   await uc.initiateVersionRetrieval()
-  t.true(uc.latestVersionPromise !== undefined, 'promise created')
+  t.ok(uc.latestVersionPromise !== undefined, 'promise created')
   await uc.notifyIfUpdateIsAvailable()
 
   // Save actual version for later use.
@@ -100,13 +100,13 @@ test('outdated version', async (t) => {
     'recommended command ok')
 
   stat = await uc.readTimestamp()
-  t.true(stat !== null, 'has timestamp')
+  t.ok(stat !== null, 'has timestamp')
 
   mockLog.clear()
 
   // Rerun immediately, it should not create the promise.
   await uc.initiateVersionRetrieval()
-  t.equals(uc.latestVersionPromise, undefined,
+  t.equal(uc.latestVersionPromise, undefined,
     'promise not created immediately')
 
   t.end()
@@ -128,11 +128,11 @@ test('retried immediately', async (t) => {
   })
 
   const stat = await uc.readTimestamp()
-  t.true(stat !== null, 'has timestamp')
+  t.ok(stat !== null, 'has timestamp')
 
   // Rerun immediately, it should not create the promise.
   await uc.initiateVersionRetrieval()
-  t.equals(uc.latestVersionPromise, undefined, 'promise not created')
+  t.equal(uc.latestVersionPromise, undefined, 'promise not created')
 
   // This should have no effect.
   await uc.notifyIfUpdateIsAvailable()
@@ -163,10 +163,10 @@ test('retried after age', async (t) => {
   await sleep(10)
 
   let stat = await uc.readTimestamp()
-  t.true(stat !== null, 'has timestamp')
+  t.ok(stat !== null, 'has timestamp')
 
   await uc.initiateVersionRetrieval()
-  t.true(uc.latestVersionPromise !== undefined, 'promise created')
+  t.ok(uc.latestVersionPromise !== undefined, 'promise created')
 
   await uc.notifyIfUpdateIsAvailable()
 
@@ -177,7 +177,7 @@ test('retried after age', async (t) => {
     'recommended command ok')
 
   stat = await uc.readTimestamp()
-  t.true(stat !== null, 'has timestamp')
+  t.ok(stat !== null, 'has timestamp')
 
   t.end()
 })
@@ -199,7 +199,7 @@ test('same version', async (t) => {
 
   await uc.clearTimestamp()
   await uc.initiateVersionRetrieval()
-  t.true(uc.latestVersionPromise !== undefined, 'promise created')
+  t.ok(uc.latestVersionPromise !== undefined, 'promise created')
   await uc.notifyIfUpdateIsAvailable()
 
   const str = mockLog.lines.join('\n')
@@ -225,7 +225,7 @@ test('outdated version sudo', async (t) => {
 
   await uc.clearTimestamp()
   await uc.initiateVersionRetrieval()
-  t.true(uc.latestVersionPromise !== undefined, 'promise created')
+  t.ok(uc.latestVersionPromise !== undefined, 'promise created')
   await uc.notifyIfUpdateIsAvailable()
 
   const str = mockLog.lines.join('\n')
@@ -254,7 +254,7 @@ test('outdated version global', async (t) => {
 
   await uc.clearTimestamp()
   await uc.initiateVersionRetrieval()
-  t.true(uc.latestVersionPromise !== undefined, 'promise created')
+  t.ok(uc.latestVersionPromise !== undefined, 'promise created')
   await uc.notifyIfUpdateIsAvailable()
 
   const str = mockLog.lines.join('\n')
@@ -287,7 +287,7 @@ test('outdated version as root', async (t) => {
 
   await uc.clearTimestamp()
   await uc.initiateVersionRetrieval()
-  t.true(uc.latestVersionPromise !== undefined, 'promise created')
+  t.ok(uc.latestVersionPromise !== undefined, 'promise created')
   await uc.notifyIfUpdateIsAvailable()
 
   const str = mockLog.lines.join('\n')
@@ -297,7 +297,7 @@ test('outdated version as root', async (t) => {
     'recommended command ok')
 
   const stat = await uc.readTimestamp()
-  t.true(stat === null, 'has no timestamp')
+  t.ok(stat === null, 'has no timestamp')
 
   t.end()
 })
@@ -319,10 +319,10 @@ test('outdated version NO_NPM_UPDATE_NOTIFIER', async (t) => {
 
   await uc.clearTimestamp()
   await uc.initiateVersionRetrieval()
-  t.equals(uc.latestVersionPromise, undefined, 'promise not created')
+  t.equal(uc.latestVersionPromise, undefined, 'promise not created')
 
   const stat = await uc.readTimestamp()
-  t.true(stat === null, 'has no timestamp')
+  t.ok(stat === null, 'has no timestamp')
 
   t.end()
 })
@@ -344,10 +344,10 @@ test('outdated version !isTTY', async (t) => {
 
   await uc.clearTimestamp()
   await uc.initiateVersionRetrieval()
-  t.equals(uc.latestVersionPromise, undefined, 'promise not created')
+  t.equal(uc.latestVersionPromise, undefined, 'promise not created')
 
   const stat = await uc.readTimestamp()
-  t.true(stat === null, 'has no timestamp')
+  t.ok(stat === null, 'has no timestamp')
 
   t.end()
 })
@@ -369,10 +369,10 @@ test('outdated version isCI', async (t) => {
 
   await uc.clearTimestamp()
   await uc.initiateVersionRetrieval()
-  t.equals(uc.latestVersionPromise, undefined, 'promise not created')
+  t.equal(uc.latestVersionPromise, undefined, 'promise not created')
 
   const stat = await uc.readTimestamp()
-  t.true(stat === null, 'has no timestamp')
+  t.ok(stat === null, 'has no timestamp')
 
   t.end()
 })
@@ -388,10 +388,10 @@ test('outdated version untuned', async (t) => {
 
   await uc.clearTimestamp()
   await uc.initiateVersionRetrieval()
-  t.equals(uc.latestVersionPromise, undefined, 'promise not created')
+  t.equal(uc.latestVersionPromise, undefined, 'promise not created')
 
   const stat = await uc.readTimestamp()
-  t.true(stat === null, 'has no timestamp')
+  t.ok(stat === null, 'has no timestamp')
 
   t.end()
 })
