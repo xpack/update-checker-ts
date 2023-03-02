@@ -46,19 +46,19 @@
   },
   "homepage": "https://github.com/xpack/update-checker-js",
   "dependencies": {
-    "@xpack/logger": "^5.0.2",
-    "latest-version": "^5.1.0",
-    "semver": "^7.3.5",
-    "is-installed-globally": "0.1.0",
+    "@xpack/logger": "^5.0.4",
+    "del": "^6.1.1",
+    "is-ci": "^3.0.1",
+    "is-installed-globally": "0.4.0",
     "is-path-inside": "^3.0.3",
-    "is-ci": "^3.0.0",
+    "latest-version": "^5.1.0",
     "make-dir": "^3.1.0",
-    "del": "^6.0.0"
+    "semver": "^7.3.8"
   },
   "devDependencies": {
-    "standard": "^16.0.3",
-    "tap": "^15.0.9",
-    "tar": "^6.1.0"
+    "standard": "^17.0.0",
+    "tap": "^16.3.4",
+    "tar": "^6.1.13"
   },
   "peerDependencies": {},
   "bundledDependencies": [],
