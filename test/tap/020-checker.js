@@ -71,9 +71,9 @@ test('outdated version', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     env: {},
@@ -116,9 +116,9 @@ test('retried immediately', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     env: {},
@@ -147,9 +147,9 @@ test('retried after age', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     env: {},
@@ -186,9 +186,9 @@ test('same version', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
+    packageName,
     packageVersion: latestVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     env: {},
@@ -212,9 +212,9 @@ test('outdated version sudo', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     env: {},
@@ -241,9 +241,9 @@ test('outdated version global', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     env: {},
@@ -273,9 +273,9 @@ test('outdated version as root', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     // env: {},
@@ -306,9 +306,9 @@ test('outdated version NO_NPM_UPDATE_NOTIFIER', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     env: { NO_NPM_UPDATE_NOTIFIER: '' }, // <-
@@ -331,9 +331,9 @@ test('outdated version !isTTY', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: false, // <-
     env: {},
@@ -356,9 +356,9 @@ test('outdated version isCI', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath,
     isCI: true, // <-
     isTTY: true,
     env: {},
@@ -381,9 +381,9 @@ test('outdated version untuned', async (t) => {
   const mockLog = new MockLog()
   const uc = new UpdateChecker({
     log: mockLog,
-    packageName: packageName,
-    packageVersion: packageVersion,
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath
+    packageName,
+    packageVersion,
+    timestampsFolderAbsolutePath
   })
 
   await uc.clearTimestamp()
@@ -402,7 +402,7 @@ test('missing package', async (t) => {
     log: mockLog,
     packageName: '@xpack/no-such-package',
     packageVersion: '0.0.0',
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     env: {},
@@ -429,7 +429,7 @@ test('missing package debug', async (t) => {
     log: mockLog,
     packageName: '@xpack/no-such-package',
     packageVersion: '0.0.0',
-    timestampsFolderAbsolutePath: timestampsFolderAbsolutePath,
+    timestampsFolderAbsolutePath,
     isCI: false,
     isTTY: true,
     env: {},
