@@ -79,7 +79,7 @@ async main(argv) {
 }
 ```
 
-The check is not done if one of the foollowing conditions are met:
+The check is not done if one of the following conditions are met:
 
 - running in a CI environment
 - stdout is not a TTY
@@ -96,7 +96,7 @@ to override them by passing boolean properties to the constructor:
 - `isInstalledGlobally`
 - `isInstalledAsRoot`
 
-The valability of the check can also be configured via a property:
+The validity of the check can also be configured via a property:
 
 - `checkUpdatesIntervalSeconds`
 

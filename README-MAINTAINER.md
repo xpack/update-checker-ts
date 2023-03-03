@@ -34,6 +34,15 @@ cd <project-folder>
 npm link @xpack/update-checker
 ```
 
+### Update
+
+Keep the following to an older version, since the new versions were
+migrated to ES6 modules:
+
+- del 6.1.1
+- is-path-inside 3.0.3
+- latest-version 5.1.0
+
 ### Tests
 
 The tests use the [`node-tap`](http://www.node-tap.org) framework
@@ -225,8 +234,6 @@ To enforce checking at file level, add the following comments right after
 the `use strict`:
 
 ```javascript
-'use strict'
-/* eslint valid-jsdoc: "error" */
 /* eslint max-len: [ "error", 80, { "ignoreUrls": true } ] */
 ```
 
