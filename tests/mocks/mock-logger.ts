@@ -17,17 +17,13 @@
 
 // ----------------------------------------------------------------------------
 
-import { Logger, LoggerConstructorParameters } from '@xpack/logger'
+import { Logger } from '@xpack/logger'
 
 // ----------------------------------------------------------------------------
 
 import { MockConsole } from './mock-console.js'
 
 export class MockLogger extends Logger {
-  constructor (params: LoggerConstructorParameters) {
-    super(params)
-  }
-
   get lines (): string[] {
     return (this.console as MockConsole).lines
   }
