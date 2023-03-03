@@ -20,8 +20,8 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "tap 010-constructor.js",
-      "program": "${workspaceRoot}/test/tap/010-constructor.js",
+      "name": "tap 010-constructor",
+      "program": "${workspaceRoot}/tests/tap/010-constructor.ts",
       "stopOnEntry": true,
       "args": [
       ],
@@ -29,6 +29,7 @@
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [
+        "--loader=ts-node/esm",
         "--nolazy"
       ],
       "env": {
@@ -39,13 +40,13 @@
         "domain.js"
       ],
       "console": "internalConsole",
-      "sourceMaps": false
+      "sourceMaps": true
     },
     {
       "type": "node",
       "request": "launch",
       "name": "tap 020-checker",
-      "program": "${workspaceRoot}/test/tap/020-checker.js",
+      "program": "${workspaceRoot}/tests/tap/020-checker.ts",
       "stopOnEntry": true,
       "args": [
       ],
@@ -53,6 +54,7 @@
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [
+        "--loader=ts-node/esm",
         "--nolazy"
       ],
       "env": {
@@ -63,7 +65,7 @@
         "domain.js"
       ],
       "console": "internalConsole",
-      "sourceMaps": false
+      "sourceMaps": true
     }
   ]
 }

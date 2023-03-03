@@ -9,8 +9,6 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-'use strict'
-/* eslint valid-jsdoc: "error" */
 /* eslint max-len: [ "error", 80, { "ignoreUrls": true } ] */
 
 // ----------------------------------------------------------------------------
@@ -21,58 +19,71 @@
 
 // ----------------------------------------------------------------------------
 
-// const assert = require('assert')
-const path = require('path')
+// import { strict as assert } from 'node:assert'
+import * as path from 'node:path'
 
 // The `[node-tap](http://www.node-tap.org)` framework.
-const test = require('tap').test
+import { test } from 'tap'
 
-const MockLog = require('../common.js').MockLog
+// ----------------------------------------------------------------------------
 
-const UpdateChecker = require('../../index.js').UpdateChecker
+import { MockConsole } from '../mocks/mock-console.js'
+import { MockLogger } from '../mocks/mock-logger.js'
+
+import { UpdateChecker } from '../../src/index.js'
+import { UpdateCheckerConstructorParameters } from '../../dist/index.js'
+
+// ----------------------------------------------------------------------------
+
 const timestampSuffix = '-update-check'
 const defaultCheckUpdatesIntervalSeconds = 24 * 60 * 60
 
 // ----------------------------------------------------------------------------
 
-test('asserts', (t) => {
+await test('asserts', (t) => {
   t.ok(UpdateChecker !== undefined, 'UpdateChecker is defined')
-  t.ok(MockLog !== undefined, 'MockLog is defined')
+  t.ok(MockConsole !== undefined, 'MockConsole is defined')
+  t.ok(MockLogger !== undefined, 'MockLogger is defined')
 
   t.end()
 })
 
-test('constructor with values', (t) => {
-  const mockLog = new MockLog()
-  const ck = new UpdateChecker({
+await test('constructor with values', (t) => {
+  const mockConsole = new MockConsole()
+  const mockLog = new MockLogger({ console: mockConsole, level: 'trace' })
+
+  const checker = new UpdateChecker({
     log: mockLog,
     packageName: 'my-name',
     packageVersion: '1.2.3',
-    timestampsFolderAbsolutePath: 'my-path'
+    timestampsFolderPath: 'my-path'
   })
-  t.ok(ck, 'created')
-  t.match(mockLog.lines[0], 'UpdateChecker.constructor()', 'logged')
-  t.equal(ck.packageName, 'my-name', 'name ok')
-  t.equal(ck.packageVersion, '1.2.3', 'version ok')
-  t.equal(ck.timestampsFolderAbsolutePath, 'my-path', 'folder path ok')
+  t.ok(checker, 'created')
+  // console.log(mockLog.lines)
+  t.match(mockLog.lines[1], 'UpdateChecker.constructor()', 'logged')
+  t.equal(checker.packageName, 'my-name', 'name ok')
+  t.equal(checker.packageVersion, '1.2.3', 'version ok')
+  t.equal(checker.timestampsFolderPath, 'my-path', 'folder path ok')
   const filePath = path.join('my-path', 'my-name' + timestampSuffix)
-  t.equal(ck.timestampFileAbsolutePath, filePath, 'file path ok')
+  t.equal(checker.timestampFilePath, filePath, 'file path ok')
 
-  t.ok(ck.timestampFileAbsolutePath.endsWith(timestampSuffix),
+  t.ok(checker.timestampFilePath.endsWith(timestampSuffix),
     'file suffix ok')
-  t.equal(ck.checkUpdatesIntervalMilliseconds,
+  t.equal(checker.checkUpdatesIntervalMilliseconds,
     defaultCheckUpdatesIntervalSeconds * 1000,
     'interval ok')
 
   t.end()
 })
 
-test('constructor without values', (t) => {
-  const mockLog = new MockLog()
+await test('constructor without values', (t) => {
+  const mockConsole = new MockConsole()
+  const mockLog = new MockLogger({ console: mockConsole })
 
   t.throws(
     () => {
-      const ck = new UpdateChecker()
+      const ck = new UpdateChecker(
+        undefined as unknown as UpdateCheckerConstructorParameters)
       ck.log.trace()
     },
     'assert(params)',
@@ -82,7 +93,7 @@ test('constructor without values', (t) => {
   t.throws(
     () => {
       const ck = new UpdateChecker({
-      })
+      } as unknown as UpdateCheckerConstructorParameters)
       ck.log.trace()
     },
     'assert(params.log)',
@@ -93,7 +104,7 @@ test('constructor without values', (t) => {
     () => {
       const ck = new UpdateChecker({
         log: mockLog
-      })
+      } as unknown as UpdateCheckerConstructorParameters)
       ck.log.trace()
     },
     'assert(params.packageName)',
@@ -105,7 +116,7 @@ test('constructor without values', (t) => {
       const ck = new UpdateChecker({
         log: mockLog,
         packageName: 'my-name'
-      })
+      } as unknown as UpdateCheckerConstructorParameters)
       ck.log.trace()
     },
     'assert(params.packageVersion)',

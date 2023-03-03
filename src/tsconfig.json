@@ -3,11 +3,12 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "../tsconfig-common.json",
   "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "../dist"
   },
-  "exclude": [
-    "./tap"
-  ],
+  "exclude": [],
   "include": [
-    "./mocks/*.ts"
+    "*.ts",
+    "lib/*.ts"
   ]
 }

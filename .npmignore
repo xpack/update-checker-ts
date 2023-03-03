@@ -45,6 +45,24 @@
 /.travis.yml
 /.appveyor.yml
 
-/README-MAINTAINER.md
+README-*.md
+
+/src/
+**/tsconfig*.json
+
+*.ts
+lib/**/*.ts
+# The above removes all TypeScript including the .d.ts files.
+# Bring those later back.
+!*.d.ts
+!lib/*.d.ts
+
+tsconfig.tsbuildinfo
+
+/tests/
+
+typedoc.json
+/docs/
+/scripts/
 
 #end

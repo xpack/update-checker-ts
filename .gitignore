@@ -48,8 +48,6 @@ typings/
 # Optional REPL history
 .node_repl_history
 
-# -----
-
 # Output of 'npm pack'
 /*.tgz
 
@@ -61,5 +59,16 @@ typings/
 
 # next.js build output
 .next
+
+# ---
+
+**/*.js
+**/*.js.map
+**/*.d.ts
+**/*.d.ts.map
+
+/docs/
+
+tsconfig.tsbuildinfo
 
 # end

@@ -13,7 +13,28 @@
 
 // ----------------------------------------------------------------------------
 
-// Re-export the library definitions.
-export * from './lib/update-checker.js'
+// import * as util from 'node:util'
+
+// ----------------------------------------------------------------------------
+
+import { Logger, LoggerConstructorParameters } from '@xpack/logger'
+
+// ----------------------------------------------------------------------------
+
+import { MockConsole } from './mock-console.js'
+
+export class MockLogger extends Logger {
+  constructor (params: LoggerConstructorParameters) {
+    super(params)
+  }
+
+  get lines (): string[] {
+    return (this.console as MockConsole).lines
+  }
+
+  clear (): void {
+    this._console.clear()
+  }
+}
 
 // ----------------------------------------------------------------------------

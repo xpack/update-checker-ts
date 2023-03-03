@@ -9,17 +9,46 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-'use strict'
-/* eslint valid-jsdoc: "error" */
+// ----------------------------------------------------------------------------
+
 /* eslint max-len: [ "error", 80, { "ignoreUrls": true } ] */
 
 // ----------------------------------------------------------------------------
 
-// https://nodejs.org/docs/latest-v10.x/api/
-const assert = require('assert')
-const os = require('os')
-const path = require('path')
-const fs = require('fs')
+// https://nodejs.org/docs/latest-v14.x/api/
+import { strict as assert } from 'node:assert'
+import * as fs from 'node:fs'
+import * as os from 'node:os'
+import * as path from 'node:path'
+
+// ----------------------------------------------------------------------------
+
+// https://www.npmjs.com/package/@xpack/logger
+import { Logger } from '@xpack/logger'
+
+// https://www.npmjs.com/package/del
+import { deleteAsync } from 'del'
+
+// https://www.npmjs.com/package/is-ci
+// Used in place.
+import isCI from 'is-ci'
+
+// https://www.npmjs.com/package/is-installed-globally
+// Used in place.
+import isInstalledGlobally from 'is-installed-globally'
+
+// https://www.npmjs.com/package/is-path-inside
+// Note v4 no longer supports `require()`, but `import`.
+import isPathInside from 'is-path-inside'
+
+// https://www.npmjs.com/package/make-dir
+import makeDir from 'make-dir'
+
+// https://www.npmjs.com/package/latest-version
+import latestVersionPromise from 'latest-version'
+
+// https://www.npmjs.com/package/semver
+import * as semver from 'semver'
 
 // ----------------------------------------------------------------------------
 
@@ -27,48 +56,54 @@ const fsPromises = fs.promises
 
 // ----------------------------------------------------------------------------
 
-// https://www.npmjs.com/package/del
-const del = require('del')
-
-// https://www.npmjs.com/package/is-ci
-// Used in place.
-// const isCI = require('is-ci')
-
-// https://www.npmjs.com/package/is-installed-globally
-// Used in place.
-// const isInstalledGlobally = require('is-installed-globally')
-
-// https://www.npmjs.com/package/is-path-inside
-// Note v4 no longer supports `require()`, but `import`.
-const isPathInside = require('is-path-inside')
-
-// https://www.npmjs.com/package/make-dir
-const makeDir = require('make-dir')
-
-// https://www.npmjs.com/package/latest-version
-const latestVersionPromise = require('latest-version')
-
-// https://www.npmjs.com/package/semver
-const semver = require('semver')
-
-// ----------------------------------------------------------------------------
-
 // Modules that return a Boolean. Used in place.
 
 // Default variables.
-const timestampsFolderAbsolutePath = path.join(os.homedir(), '.config',
-  'npm-timestamps')
-const timestampSuffix = '-update-check'
-const defaultCheckUpdatesIntervalSeconds = 24 * 60 * 60
+const timestampsFolderPath: string = path.join(os.homedir(), '.config',
+  'timestamps')
+const timestampSuffix: string = '-update-check'
+const defaultCheckUpdatesIntervalSeconds: number = 24 * 60 * 60
 
 // ============================================================================
 
-// export
-class UpdateChecker {
+export interface UpdateCheckerConstructorParameters {
+  log: Logger
+  packageName: string
+  packageVersion: string
+  timestampsFolderPath?: string
+  checkUpdatesIntervalSeconds?: number
+  env?: any
+  isCI?: boolean
+  isTTY?: boolean
+  isRunningAsRoot?: boolean
+  isInstalledGlobally?: boolean
+  isInstalledAsRoot?: boolean
+}
+
+export class UpdateChecker {
   // --------------------------------------------------------------------------
 
+  log: Logger
+  packageName: string
+  packageVersion: string
+  latestVersion: string | undefined = undefined
+
+  timestampsFolderPath: string
+  timestampFilePath: string
+  checkUpdatesIntervalMilliseconds: number
+
+  protected processEnv: any
+  protected isCI: boolean = false
+  protected isTTY: boolean = false
+  protected isRunningAsRoot: boolean = false
+  protected isInstalledGlobally: boolean = false
+  protected isInstalledAsRoot: boolean = false
+
+  latestVersionPromise: Promise<string> | undefined = undefined
+  returnedError: any | undefined = undefined
+
   // Constructor: use parent definition.
-  constructor (params) {
+  constructor (params: UpdateCheckerConstructorParameters) {
     assert(params)
 
     assert(params.log)
@@ -84,66 +119,70 @@ class UpdateChecker {
     this.packageVersion = params.packageVersion
 
     // Optional parameters.
-    this.timestampsFolderAbsolutePath = params.timestampsFolderAbsolutePath ||
-      timestampsFolderAbsolutePath
+    this.timestampsFolderPath = params.timestampsFolderPath ??
+      timestampsFolderPath
 
     // Uses the folder path.
-    this.timestampFileAbsolutePath = path.join(
-      this.timestampsFolderAbsolutePath,
+    this.timestampFilePath = path.join(
+      this.timestampsFolderPath,
       this.packageName + timestampSuffix
     )
 
     this.checkUpdatesIntervalMilliseconds =
-      (params.checkUpdatesIntervalSeconds ||
+      (params.checkUpdatesIntervalSeconds ??
         defaultCheckUpdatesIntervalSeconds) * 1000
-
-    this.private_ = {}
 
     // For testability reasons, allow to override some conditions.
     // This may be also used for special environments and use cases.
-    this.private_.processEnv = params.env || process.env || {}
+    this.processEnv = params.env ?? process.env ?? {}
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isCI')) {
-      this.private_.isCI = params.isCI
+    if (Object.prototype.hasOwnProperty.call(params, 'isCI') &&
+      params.isCI !== undefined) {
+      this.isCI = params.isCI
     } else {
-      this.private_.isCI = require('is-ci')
+      this.isCI = isCI
     }
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isTTY')) {
-      this.private_.isTTY = params.isTTY
+    if (Object.prototype.hasOwnProperty.call(params, 'isTTY') &&
+    params.isTTY !== undefined) {
+      this.isTTY = params.isTTY
     } else {
-      this.private_.isTTY = process.stdout.isTTY
+      this.isTTY = process.stdout.isTTY
     }
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isRunningAsRoot')) {
-      this.private_.isRunningAsRoot = params.isRunningAsRoot
+    if (Object.prototype.hasOwnProperty.call(params, 'isRunningAsRoot') &&
+    params.isRunningAsRoot !== undefined) {
+      this.isRunningAsRoot = params.isRunningAsRoot
     } else {
       /* istanbul ignore next */
       if (os.platform() !== 'win32') {
-        this.private_.isRunningAsRoot =
-          process.geteuid && process.geteuid() !== process.getuid()
+        this.isRunningAsRoot =
+          process.geteuid !== undefined &&
+          process.geteuid() !== process.getuid()
       } else {
         /* istanbul ignore next */
-        this.private_.isRunningAsRoot = false
+        this.isRunningAsRoot = false
       }
     }
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isInstalledGlobally')) {
-      this.private_.isInstalledGlobally = params.isInstalledGlobally
+    if (Object.prototype.hasOwnProperty.call(params, 'isInstalledGlobally') &&
+    params.isInstalledGlobally !== undefined) {
+      this.isInstalledGlobally = params.isInstalledGlobally
     } else {
-      this.private_.isInstalledGlobally = require('is-installed-globally')
+      this.isInstalledGlobally = isInstalledGlobally
     }
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isInstalledAsRoot')) {
-      this.private_.isInstalledAsRoot = params.isInstalledAsRoot
+    if (Object.prototype.hasOwnProperty.call(params, 'isInstalledAsRoot') &&
+    params.isInstalledAsRoot !== undefined) {
+      this.isInstalledAsRoot = params.isInstalledAsRoot
     } else {
-      this.private_.isInstalledAsRoot = false
+      this.isInstalledAsRoot = false
       /* istanbul ignore next */
       if (os.platform() !== 'win32') {
-        if (this.private_.isInstalledGlobally &&
+        if (this.isInstalledGlobally &&
           isPathInside(__dirname, '/usr/local')) {
           // May not be very reliable if installed in another system location.
-          this.private_.isInstalledAsRoot = false
+          this.isInstalledAsRoot = false
         }
       }
     }
@@ -152,7 +191,7 @@ class UpdateChecker {
   /**
    * @summary Initiate a procedure to retrieve the version.
    *
-   * @returns {undefined} Nothing.
+   * @returns Nothing.
    *
    * @description
    * Since this is a potentially long operation, it is initiated at the
@@ -163,7 +202,7 @@ class UpdateChecker {
    * when not running from a console, or the environment variable
    * `NO_NPM_UPDATE_NOTIFIER` is defined.
    */
-  async initiateVersionRetrieval () {
+  async initiateVersionRetrieval (): Promise<void> {
     const log = this.log
     log.trace(`${this.constructor.name}.initiateVersionRetrieval()`)
 
@@ -171,53 +210,44 @@ class UpdateChecker {
 
     const envName = 'NO_NPM_UPDATE_NOTIFIER'
     if (this.checkUpdatesIntervalMilliseconds === 0 ||
-      this.private_.isCI ||
-      !this.private_.isTTY ||
-      Object.prototype.hasOwnProperty.call(this.private_.processEnv, envName)) {
+      this.isCI ||
+      !this.isTTY ||
+      Object.prototype.hasOwnProperty.call(this.processEnv, envName)) {
       log.trace(`${this.constructor.name}:` +
         ' do not fetch latest version number.')
       return
     }
 
-    if (await this.didIntervalExpire_(this.checkUpdatesIntervalMilliseconds)) {
+    if (await this.didIntervalExpire(this.checkUpdatesIntervalMilliseconds)) {
       log.trace(`${this.constructor.name}:` +
         ' fetching latest version number...')
 
       // Create the promise, do not wait for it yet.
-      this.latestVersionPromise = this.prepareLatestVersionPromise()
+      this.latestVersionPromise = latestVersionPromise(this.packageName)
     }
-  }
-
-  /**
-   * @summary Create the promise to get the latest version.
-   *
-   * @returns {Promise} A promise to retrieve the version.
-   */
-  prepareLatestVersionPromise () {
-    return latestVersionPromise(this.packageName)
   }
 
   /**
    * @summary Compare versions and notify if an update is available.
    *
-   * @returns {undefined} Nothing.
+   * @returns Nothing.
    *
    * @description
    * Await for the actual version to be retrieved, compare with the
    * current version, possibly notify and write a new timestamp.
    */
-  async notifyIfUpdateIsAvailable () {
+  async notifyIfUpdateIsAvailable (): Promise<void> {
     const log = this.log
     log.trace(`${this.constructor.name}.notifyIfUpdateIsAvailable()`)
 
-    if (!this.latestVersionPromise) {
+    if (this.latestVersionPromise == null) {
       log.trace(`${this.constructor.name}:` +
         ' latestVersionPromise not defined, update silently ignored.')
       // If the promise was not created, no action.
       return
     }
 
-    let latestVersion
+    let latestVersion: string
     try {
       // Actively await for the promise to complete.
       latestVersion = await this.latestVersionPromise
@@ -235,7 +265,7 @@ class UpdateChecker {
 
       this.latestVersion = latestVersion
 
-      if (this.private_.isRunningAsRoot) {
+      if (this.isRunningAsRoot) {
       // When running as root, skip writing the timestamp to avoid
       // later EACCES or EPERM. The effect is that the check will
       // be performed with each run.
@@ -249,11 +279,11 @@ class UpdateChecker {
         }
         return
       }
-    } catch (err) {
+    } catch (err: any) {
       if (log.isDebug) {
         log.debug(err)
       } else {
-        log.warning(err.message)
+        log.warn(err.message)
       }
       this.returnedError = err
     }
@@ -264,7 +294,7 @@ class UpdateChecker {
       await this.createTimestamp()
 
       log.debug(`${this.constructor.name}.checkUpdate()` +
-      ` timestamp ${this.timestampFileAbsolutePath} created`)
+      ` timestamp ${this.timestampFilePath} created`)
     } catch (err) /* istanbul ignore next */ {
       log.debug(err)
     }
@@ -273,9 +303,9 @@ class UpdateChecker {
   /**
    * @summary Send the notification message.
    *
-   * @param {String} latestVersion A string with the latest version,
+   * @param latestVersion A string with the latest version,
    *  in semver format.
-   * @return {undefined} Nothing.
+   * @return Nothing.
    *
    * @description
    * The notification is sent by writing to the log.
@@ -285,17 +315,17 @@ class UpdateChecker {
    *
    * @override
    */
-  sendNotification (latestVersion) {
+  sendNotification (latestVersion: string): void {
     const log = this.log
     log.trace(`${this.constructor.name}.sendNotification()`)
 
-    const isGlobalStr = this.private_.isInstalledGlobally ? ' --global' : ''
+    const isGlobalStr = this.isInstalledGlobally ? ' --global' : ''
 
     let msg = '\n'
     msg += `>>> New version ${this.packageVersion} -> `
     msg += `${latestVersion} available. <<<\n`
     msg += ">>> Run '"
-    if (this.private_.isInstalledAsRoot) {
+    if (this.isInstalledAsRoot) {
       msg += 'sudo '
     }
     msg += `npm install${isGlobalStr} ${this.packageName}' to update. <<<`
@@ -306,20 +336,20 @@ class UpdateChecker {
   /**
    * @summary Check if a subsequent test is too soon.
    *
-   * @param {Number} ageMillis Number of milliseconds.
-   * @returns {Boolean} True if there is no timestamp or if it is older
+   * @param ageMillis Number of milliseconds.
+   * @returns True if there is no timestamp or if it is older
    *  than the given age.
    */
-  async didIntervalExpire_ (ageMillis) {
+  protected async didIntervalExpire (ageMillis: number): Promise<boolean> {
     assert(ageMillis > 0)
     const log = this.log
 
     const stats = await this.readTimestamp()
-    if (stats) {
-      const millisDelta = Date.now() - stats.mtime
-      if (millisDelta < ageMillis) {
+    if (stats != null) {
+      const deltaMillis = Date.now() - stats.mtime.valueOf()
+      if (deltaMillis < ageMillis) {
         log.trace(`${this.constructor.name}: update timeout did not expire ` +
-          `${Math.floor(millisDelta / 1000)} ` +
+          `${Math.floor(deltaMillis / 1000)} ` +
           `< ${Math.floor(ageMillis / 1000)}`)
         return false
       }
@@ -331,14 +361,14 @@ class UpdateChecker {
     return true
   }
 
-  async readTimestamp () {
+  async readTimestamp (): Promise<fs.Stats | null> {
     const log = this.log
 
     try {
-      const stats = await fsPromises.stat(this.timestampFileAbsolutePath)
+      const stats = await fsPromises.stat(this.timestampFilePath)
       log.trace(`${this.constructor.name}.readTimestamp() ok`)
       return stats
-    } catch (ex) {
+    } catch (err: any) {
       // File not found.
       // console.log(ex)
     }
@@ -349,43 +379,30 @@ class UpdateChecker {
   /**
    * @summary Remove the file used as timestamp
    *
-   * @returns {undefined} Nothing.
+   * @returns Nothing.
    *
    * @description
    * The main reason this is a separate function is testability.
    */
-  async clearTimestamp () {
+  async clearTimestamp (): Promise<void> {
     const log = this.log
     log.trace(`${this.constructor.name}.clearTimestamp()`)
 
-    await del(this.timestampFileAbsolutePath, { force: true })
+    await deleteAsync(this.timestampFilePath, { force: true })
   }
 
-  async createTimestamp () {
+  async createTimestamp (): Promise<void> {
     const log = this.log
     log.trace(`${this.constructor.name}.createTimestamp()`)
 
     // Ensure the parent folder is present.
-    await makeDir(path.dirname(this.timestampFileAbsolutePath))
+    await makeDir(path.dirname(this.timestampFilePath))
 
     // Create an empty file; the content is ignored,
     // only the modified date is of interest.
-    const fd = await fsPromises.open(this.timestampFileAbsolutePath, 'w')
+    const fd = await fsPromises.open(this.timestampFilePath, 'w')
     await fd.close()
   }
 }
-
-// ----------------------------------------------------------------------------
-// Node.js specific export definitions.
-
-// By default, `module.exports = {}`.
-// The class is added as a property to this object.
-
-module.exports.UpdateChecker = UpdateChecker
-
-// In ES6, it would be:
-// export class UpdateChecker { ... }
-// ...
-// import { UpdateChecker } from 'update-checker.js'
 
 // ----------------------------------------------------------------------------
