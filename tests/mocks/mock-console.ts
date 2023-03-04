@@ -27,19 +27,20 @@ export class MockConsole extends Console {
   lines: string[]
 
   constructor () {
-    const ostream = new Writable({
+    const stdoutStream = new Writable({
       write: (chunk, _encoding, callback) => {
         this.lines.push(chunk.toString())
         callback()
       }
     })
-    const errstream = new Writable({
-      write: (chunk, _encoding, callback) => {
-        this.lines.push(chunk.toString())
-        callback()
-      }
-    })
-    super(ostream, errstream)
+    // const stderrStream = new Writable({
+    //   write: (chunk, _encoding, callback) => {
+    //     this.lines.push(chunk.toString())
+    //     callback()
+    //   }
+    // })
+    // super(stdoutStream, stderrStream)
+    super(stdoutStream)
 
     this.lines = []
   }
