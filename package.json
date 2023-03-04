@@ -9,7 +9,7 @@
     },
     "types": "./esm/index.d.ts",
     "default": "./esm/index.js"
-},
+  },
   "main": "./esm/index.js",
   "module": "./esm/index.js",
   "types": "./esm/index.d.ts",
@@ -101,6 +101,17 @@
     "reporter": "classic",
     "timeout": 30,
     "ts": true
+  },
+  "eslintConfig": {
+    "rules": {
+      "max-len": [
+        "error",
+        80,
+        {
+          "ignoreUrls": true
+        }
+      ]
+    }
   },
   "ts-standard": {
     "ignore": [
