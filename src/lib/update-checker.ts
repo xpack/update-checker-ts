@@ -213,7 +213,7 @@ export class UpdateChecker {
     if (this.checkUpdatesIntervalMilliseconds === 0 ||
       this.isCI ||
       !this.isTTY ||
-      Object.prototype.hasOwnProperty.call(this.processEnv, envName)) {
+      this.processEnv[envName] !== undefined) {
       log.trace(`${this.constructor.name}:` +
         ' do not fetch latest version number.')
       return
