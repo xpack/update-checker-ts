@@ -73,6 +73,10 @@ export interface UpdateCheckerConstructorParameters {
   checkUpdatesIntervalSeconds?: number
 }
 
+/**
+ * @ignore
+ * @summary Environment used during tests.
+ */
 export interface UpdateCheckerTestEnvironment {
   env?: any
   isCI?: boolean
