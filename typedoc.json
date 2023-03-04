@@ -14,6 +14,10 @@
   "githubPages": true,
   "gaID": "341760653",
   "includeVersion": false,
+  "intentionallyNotExported": [
+    "Logger",
+    "UpdateCheckerTestEnvironment"
+  ],
   "navigationLinks": {
     "xPack": "https://xpack.github.io/",
     "GitHub": "https://github.com/xpack/update-checker-ts/",
