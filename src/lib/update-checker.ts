@@ -70,6 +70,9 @@ export interface UpdateCheckerConstructorParameters {
   packageVersion: string
   timestampsFolderPath?: string
   checkUpdatesIntervalSeconds?: number
+}
+
+export interface UpdateCheckerTestEnvironment {
   env?: any
   isCI?: boolean
   isTTY?: boolean
@@ -90,6 +93,9 @@ export class UpdateChecker {
   timestampFilePath: string
   checkUpdatesIntervalMilliseconds: number
 
+  latestVersionPromise: Promise<string> | undefined = undefined
+  returnedError: any | undefined = undefined
+
   protected processEnv: any
   protected isCI: boolean = false
   protected isTTY: boolean = false
@@ -97,8 +103,7 @@ export class UpdateChecker {
   protected isInstalledGlobally: boolean = false
   protected isInstalledAsRoot: boolean = false
 
-  latestVersionPromise: Promise<string> | undefined = undefined
-  returnedError: any | undefined = undefined
+  static testEnvironment: UpdateCheckerTestEnvironment | undefined
 
   // Constructor: use parent definition.
   constructor (params: UpdateCheckerConstructorParameters) {
@@ -132,25 +137,22 @@ export class UpdateChecker {
 
     // For testability reasons, allow to override some conditions.
     // This may be also used for special environments and use cases.
-    this.processEnv = params.env ?? process.env ?? {}
+    this.processEnv = UpdateChecker.testEnvironment?.env ?? process.env ?? {}
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isCI') &&
-      params.isCI !== undefined) {
-      this.isCI = params.isCI
+    if (UpdateChecker.testEnvironment?.isCI !== undefined) {
+      this.isCI = UpdateChecker.testEnvironment?.isCI
     } else {
       this.isCI = isCI
     }
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isTTY') &&
-    params.isTTY !== undefined) {
-      this.isTTY = params.isTTY
+    if (UpdateChecker.testEnvironment?.isTTY !== undefined) {
+      this.isTTY = UpdateChecker.testEnvironment.isTTY
     } else {
       this.isTTY = process.stdout.isTTY
     }
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isRunningAsRoot') &&
-    params.isRunningAsRoot !== undefined) {
-      this.isRunningAsRoot = params.isRunningAsRoot
+    if (UpdateChecker.testEnvironment?.isRunningAsRoot !== undefined) {
+      this.isRunningAsRoot = UpdateChecker.testEnvironment.isRunningAsRoot
     } else {
       /* istanbul ignore next */
       if (os.platform() !== 'win32') {
@@ -163,16 +165,15 @@ export class UpdateChecker {
       }
     }
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isInstalledGlobally') &&
-    params.isInstalledGlobally !== undefined) {
-      this.isInstalledGlobally = params.isInstalledGlobally
+    if (UpdateChecker.testEnvironment?.isInstalledGlobally !== undefined) {
+      this.isInstalledGlobally =
+        UpdateChecker.testEnvironment.isInstalledGlobally
     } else {
       this.isInstalledGlobally = isInstalledGlobally
     }
 
-    if (Object.prototype.hasOwnProperty.call(params, 'isInstalledAsRoot') &&
-    params.isInstalledAsRoot !== undefined) {
-      this.isInstalledAsRoot = params.isInstalledAsRoot
+    if (UpdateChecker.testEnvironment?.isInstalledAsRoot !== undefined) {
+      this.isInstalledAsRoot = UpdateChecker.testEnvironment.isInstalledAsRoot
     } else {
       this.isInstalledAsRoot = false
       /* istanbul ignore next */

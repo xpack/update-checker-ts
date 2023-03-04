@@ -23,7 +23,7 @@ export class MockLogger extends Logger {
   }
 
   clear (): void {
-    this._console.clear()
+    this.console.clear()
   }
 }
 

@@ -61,17 +61,19 @@ await test('outdated version', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion
+    // timestampsFolderPath
   })
 
   await checker.clearTimestamp()
@@ -110,17 +112,20 @@ await test('retried immediately', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion
+    // timestampsFolderPath,
   })
 
   const stat = await checker.readTimestamp()
@@ -143,17 +148,20 @@ await test('retried after age', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion
+    // timestampsFolderPath,
   })
 
   // Force the minimal delay, the public API uses seconds.
@@ -184,17 +192,20 @@ await test('same version', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion: latestVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion: latestVersion
+    // timestampsFolderPath,
   })
 
   await checker.clearTimestamp()
@@ -212,17 +223,20 @@ await test('outdated version sudo', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: true, // <-
     isInstalledGlobally: false
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion
+    // timestampsFolderPath,
   })
 
   await checker.clearTimestamp()
@@ -243,17 +257,20 @@ await test('outdated version global', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: true // <-
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion
+    // timestampsFolderPath,
   })
 
   await checker.clearTimestamp()
@@ -282,18 +299,22 @@ await test('outdated version as root', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     // env: {},
     isRunningAsRoot: true, // <-
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion
+    // timestampsFolderPath,
   })
+
   process.env = saved
 
   await checker.clearTimestamp()
@@ -317,17 +338,20 @@ await test('outdated version NO_NPM_UPDATE_NOTIFIER', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     env: { NO_NPM_UPDATE_NOTIFIER: '' }, // <-
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion
+    // timestampsFolderPath,
   })
 
   await checker.clearTimestamp()
@@ -344,17 +368,20 @@ await test('outdated version !isTTY', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: false, // <-
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion
+    // timestampsFolderPath,
   })
 
   await checker.clearTimestamp()
@@ -371,17 +398,20 @@ await test('outdated version isCI', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName,
-    packageVersion,
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: true, // <-
     isTTY: true,
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName,
+    packageVersion
+    // timestampsFolderPath,
   })
 
   await checker.clearTimestamp()
@@ -397,6 +427,8 @@ await test('outdated version isCI', async (t) => {
 await test('outdated version untuned', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
+
+  UpdateChecker.testEnvironment = undefined
 
   const checker = new UpdateChecker({
     log: mockLog,
@@ -419,17 +451,20 @@ await test('missing package', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName: '@xpack/no-such-package',
-    packageVersion: '0.0.0',
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName: '@xpack/no-such-package',
+    packageVersion: '0.0.0'
+    // timestampsFolderPath,
   })
 
   await checker.clearTimestamp()
@@ -447,18 +482,21 @@ await test('missing package debug', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
-  // mockLog.isDebug = true
-  const checker = new UpdateChecker({
-    log: mockLog,
-    packageName: '@xpack/no-such-package',
-    packageVersion: '0.0.0',
-    // timestampsFolderPath,
+  UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
     env: {},
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
+  }
+
+  // mockLog.isDebug = true
+  const checker = new UpdateChecker({
+    log: mockLog,
+    packageName: '@xpack/no-such-package',
+    packageVersion: '0.0.0'
+    // timestampsFolderPath,
   })
 
   await checker.clearTimestamp()

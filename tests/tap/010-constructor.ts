@@ -28,8 +28,10 @@ import { test } from 'tap'
 import { MockConsole } from '../mocks/mock-console.js'
 import { MockLogger } from '../mocks/mock-logger.js'
 
-import { UpdateChecker } from '../../src/index.js'
-import { UpdateCheckerConstructorParameters } from '../../dist/index.js'
+import {
+  UpdateChecker,
+  UpdateCheckerConstructorParameters
+} from '../../src/index.js'
 
 // ----------------------------------------------------------------------------
 
@@ -49,6 +51,8 @@ await test('asserts', (t) => {
 await test('constructor with values', (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'trace' })
+
+  UpdateChecker.testEnvironment = undefined
 
   const checker = new UpdateChecker({
     log: mockLog,
@@ -77,6 +81,8 @@ await test('constructor with values', (t) => {
 await test('constructor without values', (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole })
+
+  UpdateChecker.testEnvironment = undefined
 
   t.throws(
     () => {
