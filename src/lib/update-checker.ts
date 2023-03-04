@@ -18,6 +18,7 @@ import { strict as assert } from 'node:assert'
 import * as fs from 'node:fs'
 import * as os from 'node:os'
 import * as path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 // ----------------------------------------------------------------------------
 
@@ -178,8 +179,9 @@ export class UpdateChecker {
       this.isInstalledAsRoot = false
       /* istanbul ignore next */
       if (os.platform() !== 'win32') {
+        const dirname = path.dirname(fileURLToPath(import.meta.url))
         if (this.isInstalledGlobally &&
-          isPathInside(__dirname, '/usr/local')) {
+          isPathInside(dirname, '/usr/local')) {
           // May not be very reliable if installed in another system location.
           this.isInstalledAsRoot = false
         }
