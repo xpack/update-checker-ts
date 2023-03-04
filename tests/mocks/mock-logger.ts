@@ -9,12 +9,6 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-/* eslint max-len: [ "error", 80, { "ignoreUrls": true } ] */
-
-// ----------------------------------------------------------------------------
-
-// import * as util from 'node:util'
-
 // ----------------------------------------------------------------------------
 
 import { Logger } from '@xpack/logger'

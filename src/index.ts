@@ -9,8 +9,6 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-/* eslint max-len: [ "error", 80, { "ignoreUrls": true } ] */
-
 // ----------------------------------------------------------------------------
 
 // Re-export the library definitions.
