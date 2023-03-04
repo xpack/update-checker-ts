@@ -194,7 +194,8 @@ $ npm run tap-coverage test/tap/020-checker.js
 
 #### Coverage exceptions
 
-Exclusions are marked with the `/* istanbul ignore next */` (https://github.com/gotwarlost/istanbul/blob/master/ignoring-code-for-coverage.md).
+Exclusions are marked with the `/* istanbul ignore next */`
+(https://github.com/gotwarlost/istanbul/blob/master/ignoring-code-for-coverage.md).
 
 - in the constructor, the test if the module is installed on win32 is ignored,
   since most tests are not done on win32.
