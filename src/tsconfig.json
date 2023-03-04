@@ -3,8 +3,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "../tsconfig-common.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "outDir": "../dist"
+    "outDir": "../esm"
   },
   "exclude": [],
   "include": [
