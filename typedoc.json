@@ -1,5 +1,7 @@
 {
+  "$schema": "https://typedoc.org/schema.json",
   "cleanOutputDir": true,
+  "customCss": "./assets/css/custom.css",
   "entryPoints": [
     "./src/index.ts"
   ],
@@ -11,13 +13,14 @@
   ],
   "githubPages": true,
   "gaID": "341760653",
-  "includeVersion": true,
+  "includeVersion": false,
   "navigationLinks": {
     "xPack": "https://xpack.github.io/",
-    "GitHub": "https://github.com/xpack/logger-ts/",
+    "GitHub": "https://github.com/xpack/update-checker-ts/",
     "Org": "https://github.com/xpack/"
   },
   "out": "docs",
+  "readme": "./README.md",
   "sidebarLinks": {
   },
   "tsconfig": "./src/tsconfig.json"
