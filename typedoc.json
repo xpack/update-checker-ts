@@ -1,5 +1,6 @@
 {
   "$schema": "https://typedoc.org/schema.json",
+  // https://typedoc.org/guides/options/
   "cleanOutputDir": true,
   "customCss": "./assets/css/custom.css",
   "entryPoints": [
