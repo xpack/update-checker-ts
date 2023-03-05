@@ -341,21 +341,23 @@ export class UpdateChecker {
   /**
    * @summary Check if a subsequent test is too soon.
    *
-   * @param ageMillis Number of milliseconds.
+   * @param ageMilliseconds Age in milliseconds.
    * @returns True if there is no timestamp or if it is older
    *  than the given age.
    */
-  protected async didIntervalExpire (ageMillis: number): Promise<boolean> {
-    assert(ageMillis > 0)
+  protected async didIntervalExpire (
+    ageMilliseconds: number
+  ): Promise<boolean> {
+    assert(ageMilliseconds > 0)
     const log = this.log
 
-    const stats = await this.readTimestamp()
+    const stats = await this.readTimestampFileStats()
     if (stats != null) {
       const deltaMillis = Date.now() - stats.mtime.valueOf()
-      if (deltaMillis < ageMillis) {
+      if (deltaMillis < ageMilliseconds) {
         log.trace(`${this.constructor.name}: update timeout did not expire ` +
           `${Math.floor(deltaMillis / 1000)} ` +
-          `< ${Math.floor(ageMillis / 1000)}`)
+          `< ${Math.floor(ageMilliseconds / 1000)}`)
         return false
       }
     } else {
