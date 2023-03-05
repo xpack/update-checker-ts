@@ -89,17 +89,16 @@ export interface UpdateCheckerTestEnvironment {
 export class UpdateChecker {
   // --------------------------------------------------------------------------
 
-  log: Logger
-  packageName: string
-  packageVersion: string
   latestVersion: string | undefined = undefined
-
-  timestampsFolderPath: string
   timestampFilePath: string
-  checkUpdatesIntervalMilliseconds: number
-
-  latestVersionPromise: Promise<string> | undefined = undefined
   returnedError: any | undefined = undefined
+
+  protected log: Logger
+  protected packageName: string
+  protected packageVersion: string
+  protected timestampsFolderPath: string
+  protected checkUpdatesIntervalMilliseconds: number
+  protected latestVersionPromise: Promise<string> | undefined = undefined
 
   protected processEnv: any
   protected isCI: boolean = false
@@ -367,7 +366,7 @@ export class UpdateChecker {
     return true
   }
 
-  async readTimestamp (): Promise<fs.Stats | null> {
+  protected async readTimestampFileStats (): Promise<fs.Stats | null> {
     const log = this.log
 
     try {
@@ -390,14 +389,14 @@ export class UpdateChecker {
    * @description
    * The main reason this is a separate function is testability.
    */
-  async clearTimestamp (): Promise<void> {
+  protected async clearTimestamp (): Promise<void> {
     const log = this.log
     log.trace(`${this.constructor.name}.clearTimestamp()`)
 
     await deleteAsync(this.timestampFilePath, { force: true })
   }
 
-  async createTimestamp (): Promise<void> {
+  protected async createTimestamp (): Promise<void> {
     const log = this.log
     log.trace(`${this.constructor.name}.createTimestamp()`)
 
