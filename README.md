@@ -4,7 +4,7 @@
 
 # A Node.js ES6 module to notify when a newer version of a npm package is available
 
-This project provides a TypeScript Node.js ES6 module with
+This project provides a **TypeScript** Node.js **ES6** module with
 a class to check if a more recent version of a npm package is available.
 
 The open source project is hosted on GitHub as
@@ -22,12 +22,12 @@ page.
 A recent [Node.js](https://nodejs.org) (>=14.13), since the TypeScript code
 is compiled into ECMAScript 2020 code with ES6 modules.
 
-## Easy install
+## Install
 
 The module is available as
 [`@xpack/update-checker`](https://www.npmjs.com/package/@xpack/update-checker/)
 from the public [`npmjs`](https://www.npmjs.com) repository;
-it can be added as a dependency to any JavaScript or TypeScript
+it can be added as a dependency to any TypeScript or JavaScript
 project with `npm install`:
 
 ```console
@@ -49,11 +49,12 @@ and JavaScript ES6 Node.js code with:
 import { Logger } from '@xpack/update-checker'
 ```
 
-Note: as per the ES6 specifications, importing this module in legacy
+Note: as per the ES6 specs, importing ES6 modules in legacy
 CommonJS modules is no longer possible.
 
 The module can be included in any application and the class can be used
-directly or a custom class can be derived from it for a custom behaviour.
+directly or as a base class for a derived class to implement a custom
+behaviour (like a custom notifier).
 
 A typical use case is as part of a CLI application.
 
@@ -64,9 +65,7 @@ import { UpdateChecker } from '@xpack/update-checker'
 import { Logger } from '@xpack/logger'
 
 async main(argv) {
-  const log = new Logger({
-    level: 'info'
-  })
+  const log = new Logger({ level: 'info' })
 
   // ... Other initializations.
 
@@ -92,7 +91,7 @@ async main(argv) {
 }
 ```
 
-The check is no longer performed during the next 24 hours, but this duration
+The check is no longer performed during the next 24 hours; this duration
 can be configured via the `checkUpdatesIntervalSeconds` constructor property.
 
 The check is skipped if one of the following conditions are met:
@@ -136,7 +135,7 @@ backwards incompatible changes are introduced to the public API.
 ### v2.0.0
 
 The project was migrated to TypeScript and the code is compiled into
-**ES6** modules, and can be consumed by both TypeScript and JavaScript
+**ES6** modules, that can be consumed by both TypeScript and JavaScript
 packages.
 
 Other changes:
