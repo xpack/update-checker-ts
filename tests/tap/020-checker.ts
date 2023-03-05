@@ -28,6 +28,7 @@ import { test } from 'tap'
 
 import { MockConsole } from '../mocks/mock-console.js'
 import { MockLogger } from '../mocks/mock-logger.js'
+import { PublicUpdateChecker } from '../mocks/public-update-checker.js'
 
 import { UpdateChecker } from '../../src/index.js'
 
@@ -35,7 +36,7 @@ import { UpdateChecker } from '../../src/index.js'
 
 // const timestampsFolderPath: string | undefined = undefined
 
-const packageName = 'xpm'
+const packageName = '@xpack/update-checker'
 const packageVersion = '0.0.1'
 let latestVersion: string = ''
 
@@ -69,7 +70,7 @@ await test('outdated version', async (t) => {
     isInstalledAsRoot: false,
     isInstalledGlobally: false
   }
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
@@ -77,11 +78,11 @@ await test('outdated version', async (t) => {
   })
 
   await checker.clearTimestamp()
-  let stat = await checker.readTimestamp()
+  let stat = await checker.readTimestampFileStats()
   t.ok(stat === null, 'has no timestamp')
 
   await checker.initiateVersionRetrieval()
-  t.ok(checker.latestVersionPromise !== undefined, 'promise created')
+  t.ok(checker.getLatestVersionPromise() !== undefined, 'promise created')
   await checker.notifyIfUpdateIsAvailable()
 
   assert(checker.latestVersion !== undefined)
@@ -95,14 +96,14 @@ await test('outdated version', async (t) => {
   t.match(str, `>>> Run 'npm install ${packageName}' to update. <<<`,
     'recommended command ok')
 
-  stat = await checker.readTimestamp()
+  stat = await checker.readTimestampFileStats()
   t.ok(stat !== null, 'has timestamp')
 
   mockLog.clear()
 
   // Rerun immediately, it should not create the promise.
   await checker.initiateVersionRetrieval()
-  t.equal(checker.latestVersionPromise, undefined,
+  t.equal(checker.getLatestVersionPromise(), undefined,
     'promise not created immediately')
 
   t.end()
@@ -121,19 +122,19 @@ await test('retried immediately', async (t) => {
     isInstalledGlobally: false
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
     // timestampsFolderPath,
   })
 
-  const stat = await checker.readTimestamp()
+  const stat = await checker.readTimestampFileStats()
   t.ok(stat !== null, 'has timestamp')
 
   // Rerun immediately, it should not create the promise.
   await checker.initiateVersionRetrieval()
-  t.equal(checker.latestVersionPromise, undefined, 'promise not created')
+  t.equal(checker.getLatestVersionPromise(), undefined, 'promise not created')
 
   // This should have no effect.
   await checker.notifyIfUpdateIsAvailable()
@@ -157,7 +158,7 @@ await test('retried after age', async (t) => {
     isInstalledGlobally: false
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
@@ -165,14 +166,14 @@ await test('retried after age', async (t) => {
   })
 
   // Force the minimal delay, the public API uses seconds.
-  checker.checkUpdatesIntervalMilliseconds = 1
+  checker.setCheckUpdatesIntervalMilliseconds(1)
   await sleep(10)
 
-  let stat = await checker.readTimestamp()
+  let stat = await checker.readTimestampFileStats()
   t.ok(stat !== null, 'has timestamp')
 
   await checker.initiateVersionRetrieval()
-  t.ok(checker.latestVersionPromise !== undefined, 'promise created')
+  t.ok(checker.getLatestVersionPromise() !== undefined, 'promise created')
 
   await checker.notifyIfUpdateIsAvailable()
 
@@ -182,7 +183,7 @@ await test('retried after age', async (t) => {
   t.match(str, `>>> Run 'npm install ${packageName}' to update. <<<`,
     'recommended command ok')
 
-  stat = await checker.readTimestamp()
+  stat = await checker.readTimestampFileStats()
   t.ok(stat !== null, 'has timestamp')
 
   t.end()
@@ -201,7 +202,7 @@ await test('same version', async (t) => {
     isInstalledGlobally: false
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion: latestVersion
@@ -210,7 +211,7 @@ await test('same version', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.ok(checker.latestVersionPromise !== undefined, 'promise created')
+  t.ok(checker.getLatestVersionPromise() !== undefined, 'promise created')
   await checker.notifyIfUpdateIsAvailable()
 
   const str = mockLog.lines.join('\n')
@@ -232,7 +233,7 @@ await test('outdated version sudo', async (t) => {
     isInstalledGlobally: false
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
@@ -241,7 +242,7 @@ await test('outdated version sudo', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.ok(checker.latestVersionPromise !== undefined, 'promise created')
+  t.ok(checker.getLatestVersionPromise() !== undefined, 'promise created')
   await checker.notifyIfUpdateIsAvailable()
 
   const str = mockLog.lines.join('\n')
@@ -266,7 +267,7 @@ await test('outdated version global', async (t) => {
     isInstalledGlobally: true // <-
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
@@ -275,7 +276,7 @@ await test('outdated version global', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.ok(checker.latestVersionPromise !== undefined, 'promise created')
+  t.ok(checker.getLatestVersionPromise() !== undefined, 'promise created')
   await checker.notifyIfUpdateIsAvailable()
 
   const str = mockLog.lines.join('\n')
@@ -308,7 +309,7 @@ await test('outdated version as root', async (t) => {
     isInstalledGlobally: false
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
@@ -319,7 +320,7 @@ await test('outdated version as root', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.ok(checker.latestVersionPromise !== undefined, 'promise created')
+  t.ok(checker.getLatestVersionPromise() !== undefined, 'promise created')
   await checker.notifyIfUpdateIsAvailable()
 
   const str = mockLog.lines.join('\n')
@@ -328,7 +329,7 @@ await test('outdated version as root', async (t) => {
   t.match(str, `>>> Run 'npm install ${packageName}' to update. <<<`,
     'recommended command ok')
 
-  const stat = await checker.readTimestamp()
+  const stat = await checker.readTimestampFileStats()
   t.ok(stat === null, 'has no timestamp')
 
   t.end()
@@ -347,7 +348,7 @@ await test('outdated version NO_NPM_UPDATE_NOTIFIER', async (t) => {
     isInstalledGlobally: false
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
@@ -356,9 +357,9 @@ await test('outdated version NO_NPM_UPDATE_NOTIFIER', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.equal(checker.latestVersionPromise, undefined, 'promise not created')
+  t.equal(checker.getLatestVersionPromise(), undefined, 'promise not created')
 
-  const stat = await checker.readTimestamp()
+  const stat = await checker.readTimestampFileStats()
   t.ok(stat === null, 'has no timestamp')
 
   t.end()
@@ -377,7 +378,7 @@ await test('outdated version !isTTY', async (t) => {
     isInstalledGlobally: false
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
@@ -386,9 +387,9 @@ await test('outdated version !isTTY', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.equal(checker.latestVersionPromise, undefined, 'promise not created')
+  t.equal(checker.getLatestVersionPromise(), undefined, 'promise not created')
 
-  const stat = await checker.readTimestamp()
+  const stat = await checker.readTimestampFileStats()
   t.ok(stat === null, 'has no timestamp')
 
   t.end()
@@ -407,7 +408,7 @@ await test('outdated version isCI', async (t) => {
     isInstalledGlobally: false
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
@@ -416,9 +417,9 @@ await test('outdated version isCI', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.equal(checker.latestVersionPromise, undefined, 'promise not created')
+  t.equal(checker.getLatestVersionPromise(), undefined, 'promise not created')
 
-  const stat = await checker.readTimestamp()
+  const stat = await checker.readTimestampFileStats()
   t.ok(stat === null, 'has no timestamp')
 
   t.end()
@@ -430,7 +431,7 @@ await test('outdated version untuned', async (t) => {
 
   UpdateChecker.testEnvironment = undefined
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName,
     packageVersion
@@ -439,9 +440,9 @@ await test('outdated version untuned', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.equal(checker.latestVersionPromise, undefined, 'promise not created')
+  t.equal(checker.getLatestVersionPromise(), undefined, 'promise not created')
 
-  const stat = await checker.readTimestamp()
+  const stat = await checker.readTimestampFileStats()
   t.ok(stat === null, 'has no timestamp')
 
   t.end()
@@ -460,7 +461,7 @@ await test('missing package', async (t) => {
     isInstalledGlobally: false
   }
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName: '@xpack/no-such-package',
     packageVersion: '0.0.0'
@@ -469,18 +470,22 @@ await test('missing package', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.ok(checker.latestVersionPromise !== undefined, 'promise created')
+  t.ok(checker.getLatestVersionPromise() !== undefined, 'promise created')
 
   await checker.notifyIfUpdateIsAvailable()
+
+  // console.log(mockLog.lines)
+  t.match(mockLog.lines[0], 'warning: Package ', 'warning ok')
+
+  // console.log(checker.returnedError)
   t.ok(checker.returnedError !== undefined, 'has error')
-  // console.log(uc.returnedError)
 
   t.end()
 })
 
 await test('missing package debug', async (t) => {
   const mockConsole = new MockConsole()
-  const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
+  const mockLog = new MockLogger({ console: mockConsole, level: 'debug' })
 
   UpdateChecker.testEnvironment = {
     isCI: false,
@@ -492,7 +497,7 @@ await test('missing package debug', async (t) => {
   }
 
   // mockLog.isDebug = true
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName: '@xpack/no-such-package',
     packageVersion: '0.0.0'
@@ -501,11 +506,16 @@ await test('missing package debug', async (t) => {
 
   await checker.clearTimestamp()
   await checker.initiateVersionRetrieval()
-  t.ok(checker.latestVersionPromise !== undefined, 'promise created')
+  t.ok(checker.getLatestVersionPromise() !== undefined, 'promise created')
 
   await checker.notifyIfUpdateIsAvailable()
+
+  const str = mockLog.lines.join('\n')
+  // console.log(mockLog.lines)
+  t.match(str, 'debug: PackageNotFoundError: ', 'debug ok')
+
+  // console.log(checker.returnedError)
   t.ok(checker.returnedError !== undefined, 'has error')
-  // console.log(uc.returnedError.message)
 
   t.end()
 })

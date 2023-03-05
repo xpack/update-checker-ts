@@ -27,6 +27,7 @@ import { test } from 'tap'
 
 import { MockConsole } from '../mocks/mock-console.js'
 import { MockLogger } from '../mocks/mock-logger.js'
+import { PublicUpdateChecker } from '../mocks/public-update-checker.js'
 
 import {
   UpdateChecker,
@@ -54,7 +55,7 @@ await test('constructor with values', (t) => {
 
   UpdateChecker.testEnvironment = undefined
 
-  const checker = new UpdateChecker({
+  const checker = new PublicUpdateChecker({
     log: mockLog,
     packageName: 'my-name',
     packageVersion: '1.2.3',
@@ -63,15 +64,15 @@ await test('constructor with values', (t) => {
   t.ok(checker, 'created')
   // console.log(mockLog.lines)
   t.match(mockLog.lines[1], 'UpdateChecker.constructor()', 'logged')
-  t.equal(checker.packageName, 'my-name', 'name ok')
-  t.equal(checker.packageVersion, '1.2.3', 'version ok')
-  t.equal(checker.timestampsFolderPath, 'my-path', 'folder path ok')
+  t.equal(checker.getPackageName(), 'my-name', 'name ok')
+  t.equal(checker.getPackageVersion(), '1.2.3', 'version ok')
+  t.equal(checker.getTimestampsFolderPath(), 'my-path', 'folder path ok')
   const filePath = path.join('my-path', 'my-name' + timestampSuffix)
   t.equal(checker.timestampFilePath, filePath, 'file path ok')
 
   t.ok(checker.timestampFilePath.endsWith(timestampSuffix),
     'file suffix ok')
-  t.equal(checker.checkUpdatesIntervalMilliseconds,
+  t.equal(checker.getCheckUpdatesIntervalMilliseconds(),
     defaultCheckUpdatesIntervalSeconds * 1000,
     'interval ok')
 
@@ -86,9 +87,9 @@ await test('constructor without values', (t) => {
 
   t.throws(
     () => {
-      const ck = new UpdateChecker(
+      const checker = new PublicUpdateChecker(
         undefined as unknown as UpdateCheckerConstructorParameters)
-      ck.log.trace()
+      checker.getLog().trace()
     },
     'assert(params)',
     'assert(params) throws'
@@ -96,9 +97,9 @@ await test('constructor without values', (t) => {
 
   t.throws(
     () => {
-      const ck = new UpdateChecker({
+      const checker = new PublicUpdateChecker({
       } as unknown as UpdateCheckerConstructorParameters)
-      ck.log.trace()
+      checker.getLog().trace()
     },
     'assert(params.log)',
     'assert(params.log) throws'
@@ -106,10 +107,10 @@ await test('constructor without values', (t) => {
 
   t.throws(
     () => {
-      const ck = new UpdateChecker({
+      const checker = new PublicUpdateChecker({
         log: mockLog
       } as unknown as UpdateCheckerConstructorParameters)
-      ck.log.trace()
+      checker.getLog().trace()
     },
     'assert(params.packageName)',
     'assert(params.packageName) throws'
@@ -117,11 +118,11 @@ await test('constructor without values', (t) => {
 
   t.throws(
     () => {
-      const ck = new UpdateChecker({
+      const checker = new PublicUpdateChecker({
         log: mockLog,
         packageName: 'my-name'
       } as unknown as UpdateCheckerConstructorParameters)
-      ck.log.trace()
+      checker.getLog().trace()
     },
     'assert(params.packageVersion)',
     'assert(params.packageVersion) throws'
