@@ -163,10 +163,10 @@ export class UpdateChecker {
         this.isRunningAsRoot =
           process.geteuid !== undefined &&
           process.geteuid() !== process.getuid()
-      } else {
+      } /* c8 ignore start */ else {
         /* istanbul ignore next */
         this.isRunningAsRoot = false
-      }
+      } /* c8 ignore stop */
     }
 
     if (UpdateChecker.testEnvironment?.isInstalledGlobally !== undefined) {
@@ -183,11 +183,13 @@ export class UpdateChecker {
       /* istanbul ignore next */
       if (os.platform() !== 'win32') {
         const dirname = path.dirname(fileURLToPath(import.meta.url))
+        /* c8 ignore start */
         if (this.isInstalledGlobally &&
           isPathInside(dirname, '/usr/local')) {
           // May not be very reliable if installed in another system location.
           this.isInstalledAsRoot = false
         }
+        /* c8 ignore stop */
       }
     }
   }
@@ -277,10 +279,10 @@ export class UpdateChecker {
         if (os.platform() !== 'win32') {
           log.trace(`${this.constructor.name}:` +
           ` geteuid() ${process.geteuid()} != ${process.getuid()}`)
-        } else {
-        /* istanbul ignore next */
+        } /* c8 ignore start */ else {
+          /* istanbul ignore next */
           log.trace(`${this.constructor.name}: running as administrator`)
-        }
+        } /* c8 ignore stop */
         return
       }
     } catch (err: any) {
@@ -299,9 +301,9 @@ export class UpdateChecker {
 
       log.debug(`${this.constructor.name}.checkUpdate()` +
       ` timestamp ${this.timestampFilePath} created`)
-    } catch (err) /* istanbul ignore next */ {
+    } /* c8 ignore start */ catch (err) /* istanbul ignore next */ {
       log.debug(err)
-    }
+    } /* c8 ignore stop */
   }
 
   /**
