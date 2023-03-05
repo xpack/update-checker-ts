@@ -28,5 +28,9 @@
   "readme": "./README.md",
   "sidebarLinks": {
   },
+  "sort": [
+    "instance-first",
+    "visibility"
+  ],
   "tsconfig": "./src/tsconfig.json"
 }
