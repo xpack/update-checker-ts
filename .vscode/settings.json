@@ -20,10 +20,12 @@
       "Schlueter",
       "Stmts",
       "errstream",
+      "npmignore",
       "npmjs",
       "ostream",
       "postversion",
       "tsbuildinfo",
+      "typedoc",
       "untuned",
       "xpack"
     ]
