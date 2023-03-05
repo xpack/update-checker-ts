@@ -34,11 +34,9 @@ import { Logger } from '@xpack/logger'
 import { deleteAsync } from 'del'
 
 // https://www.npmjs.com/package/is-ci
-// Used in place.
 import isCI from 'is-ci'
 
 // https://www.npmjs.com/package/is-installed-globally
-// Used in place.
 import isInstalledGlobally from 'is-installed-globally'
 
 // https://www.npmjs.com/package/is-path-inside
