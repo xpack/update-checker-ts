@@ -295,8 +295,8 @@ export class UpdateChecker {
           isPathInside(dirname, '/usr/local')) {
           // May not be very reliable if installed in another system location.
           this.isInstalledAsRoot = false
-        } /* c8 ignore stop */
-      }
+        }
+      } /* c8 ignore stop */
     }
   }
 
