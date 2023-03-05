@@ -267,11 +267,11 @@ export class UpdateChecker {
       this.isRunningAsRoot = UpdateChecker.testEnvironment.isRunningAsRoot
     } else {
       /* istanbul ignore next */
-      if (os.platform() !== 'win32') {
+      if (os.platform() !== 'win32') /* c8 ignore start */ {
         this.isRunningAsRoot =
           process.geteuid !== undefined &&
           process.geteuid() !== process.getuid()
-      } /* c8 ignore start */ else {
+      } else {
         /* istanbul ignore next */
         this.isRunningAsRoot = false
       } /* c8 ignore stop */
@@ -289,15 +289,13 @@ export class UpdateChecker {
     } else {
       this.isInstalledAsRoot = false
       /* istanbul ignore next */
-      if (os.platform() !== 'win32') {
+      if (os.platform() !== 'win32') /* c8 ignore start */ {
         const dirname = path.dirname(fileURLToPath(import.meta.url))
-        /* c8 ignore start */
         if (this.isInstalledGlobally &&
           isPathInside(dirname, '/usr/local')) {
           // May not be very reliable if installed in another system location.
           this.isInstalledAsRoot = false
-        }
-        /* c8 ignore stop */
+        } /* c8 ignore stop */
       }
     }
   }
@@ -391,10 +389,10 @@ export class UpdateChecker {
         // later EACCES or EPERM. The effect is that the check will
         // be performed with each run.
         /* istanbul ignore next */
-        if (os.platform() !== 'win32') {
+        if (os.platform() !== 'win32') /* c8 ignore start */ {
           log.trace(`${this.constructor.name}:` +
           ` geteuid() ${process.geteuid()} != ${process.getuid()}`)
-        } /* c8 ignore start */ else {
+        } else {
           /* istanbul ignore next */
           log.trace(`${this.constructor.name}: running as administrator`)
         } /* c8 ignore stop */
