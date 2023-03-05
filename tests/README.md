@@ -1,61 +1,73 @@
-## The `node-tap` framework
+# tap
 
-The tests use the `[node-tap](http://www.node-tap.org)` framework ('A Test-Anything-Protocol library for Node.js', written by Isaac Schlueter).
+This folder defines the unit tests, using `node-tap`
 
-Reporting (`--report`):
+The tests are written in TypeScript, and do not need to be compiled
+separately.
 
-- classic
-- spec
-- tap
+## Prerequisites
 
+To install the prerequisites as development dependencies:
 
-### [API](http://www.node-tap.org/api/)
+```sh
+npm install --save-dep node-tap @types/tap c8 ts-node typescript
+```
 
-- tap = require(‘tap’)
-- Class t.Test (tap.node)
-- t.test([name], [options], [function])
-- t.jobs
-- t.tearDown(function)
-- t.beforeEach(function (done) {})
-- t.afterEach(function (done) {})
-- t.plan(number)
-- t.end()
-- t.bailout([reason])
-- t.passing()
-- t.comment(message)
-- t.fail(message, extra)
-- t.pass(message)
-- t.pragma(set)
-- t.threw(error)
+Note: c8 is required since the current `tap` version does not
+support coverage.
 
-### [Assertions](http://www.node-tap.org/asserts/)
+## Configuration
 
-- t.ok(obj, message, extra)
-- t.notOk(obj, message, extra)
-- t.error(obj, message, extra)
-- t.throws(fn, [expectedError], message, extra)
-- t.doesNotThrow(fn, message, extra)
-- t.equal(found, wanted, message, extra)
-- t.notEqual(found, notWanted, message, extra)
-- t.same(found, wanted, message, extra)
-- t.notSame(found, notWanted, message, extra)
-- t.strictSame(found, wanted, message, extra)
-- t.strictNotSame(found, notWanted, message, extra)
-- t.match(found, pattern, message, extra)
-- t.notMatch(found, pattern, message, extra)
-- t.type(object, type, message, extra)
+To configure mocha to use the ES modules, add a property to `package.json`:
 
-### [Advanced](http://www.node-tap.org/advanced/)
+```json
+  "tap": {
+    "check-coverage": false,
+    "coverage": false,
+    "files": [
+      "tests/tap/*.ts"
+    ],
+    "node-arg": [
+      "--loader=ts-node/esm"
+    ],
+    "reporter": "classic",
+    "timeout": 30,
+    "ts": true
+  },
+```
 
-- Class t.Spawn()
-- Class t.Stdin()
-- t.spawn(command, arguments, [options], [name])
-- t.stdin()
-- t.addAssert(name, length, fn)
-- t.pass(message)
-- t.endAll()
+To see the available configuration variables:
 
-## The `should` module
+```sh
+node_modules/.bin/tap --dump-config
+```
 
-The [`should`](https://github.com/shouldjs/should.js) module provides BDD ['should'-style assertions](https://shouldjs.github.io), which are a nice idea, but the current version of `tap` does not properly await for async functions, so it cannot be used. :-(
+## Test
 
+Tests can be started using scripts:
+
+```json
+    "pretest-100": "npm run compile",
+    "pretest-100-c8": "npm run compile",
+    "tap": "tap --reporter=spec",
+    "test-tap": "tap",
+    "test-tap-coverage": "tap --coverage",
+    "test-tap-coverage-c8": "c8 -- tap",
+    "test-tap-coverage-100": "tap --coverage --100",
+    "test-tap-coverage-100-c8": "c8 --100 -- tap",
+    "test": "npm run test-tap -s",
+    "test-100": "npm run test-tap-coverage-100 -s",
+    "test-100-c8": "npm run test-tap-coverage-100-c8 -s",
+```
+
+## Known issues
+
+- coverage checks for projects with ES6 modules is not yet supported; use `c8`
+- `ts-node` requires a top `tsconfig.json`, currently there is no
+configuration to pass a different path
+
+## Links
+
+- <https://node-tap.org>
+- <https://github.com/bcoe/c8>
+- <https://www.npmjs.com/package/ts-node>
