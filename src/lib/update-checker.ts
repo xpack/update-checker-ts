@@ -272,7 +272,6 @@ export class UpdateChecker {
           process.geteuid !== undefined &&
           process.geteuid() !== process.getuid()
       } else {
-        /* istanbul ignore next */
         this.isRunningAsRoot = false
       } /* c8 ignore stop */
     }
@@ -393,7 +392,6 @@ export class UpdateChecker {
           log.trace(`${this.constructor.name}:` +
           ` geteuid() ${process.geteuid()} != ${process.getuid()}`)
         } else {
-          /* istanbul ignore next */
           log.trace(`${this.constructor.name}: running as administrator`)
         } /* c8 ignore stop */
         return
