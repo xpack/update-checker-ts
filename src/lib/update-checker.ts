@@ -263,12 +263,12 @@ export class UpdateChecker {
       // Prevent further calls.
       this.latestVersionPromise = undefined
 
-      if (semver.gt(latestVersion, this.packageVersion)) {
-      // If versions differ, send the notification.
-        this.sendNotification(latestVersion)
-      }
-
       this.latestVersion = latestVersion
+
+      if (semver.gt(latestVersion, this.packageVersion)) {
+      // If the latest version is greater, send the notification.
+        this.sendNotification()
+      }
 
       if (this.isRunningAsRoot) {
       // When running as root, skip writing the timestamp to avoid
@@ -320,22 +320,23 @@ export class UpdateChecker {
    *
    * @override
    */
-  sendNotification (latestVersion: string): void {
+  sendNotification (): void {
     const log = this.log
     log.trace(`${this.constructor.name}.sendNotification()`)
 
     const isGlobalStr = this.isInstalledGlobally ? ' --global' : ''
 
-    let msg = '\n'
-    msg += `>>> New version ${this.packageVersion} -> `
-    msg += `${latestVersion} available. <<<\n`
-    msg += ">>> Run '"
+    assert(this.latestVersion)
+    let message = '\n'
+    message += `>>> New version ${this.packageVersion} -> `
+    message += `${this.latestVersion} available. <<<\n`
+    message += ">>> Run '"
     if (this.isInstalledAsRoot) {
-      msg += 'sudo '
+      message += 'sudo '
     }
-    msg += `npm install${isGlobalStr} ${this.packageName}' to update. <<<`
+    message += `npm install${isGlobalStr} ${this.packageName}' to update. <<<`
 
-    log.info(msg)
+    log.info(message)
   }
 
   /**
