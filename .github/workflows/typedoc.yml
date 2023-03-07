@@ -39,11 +39,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
+        # https://github.com/actions/checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 3
 
       - name: Use Nodejs
+        # https://github.com/actions/setup-node
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
@@ -55,9 +60,11 @@ jobs:
         run: npm run typedoc
 
       - name: Setup Pages
+        # https://github.com/actions/configure-pages
         uses: actions/configure-pages@v3
 
       - name: Upload artifact
+        # https://github.com/actions/upload-pages-artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
