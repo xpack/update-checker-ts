@@ -266,8 +266,8 @@ export class UpdateChecker {
     if (UpdateChecker.testEnvironment?.isRunningAsRoot !== undefined) {
       this.isRunningAsRoot = UpdateChecker.testEnvironment.isRunningAsRoot
     } else {
-      /* istanbul ignore next */
-      if (os.platform() !== 'win32') /* c8 ignore start */ {
+      /* c8 ignore start */ /* istanbul ignore next */
+      if (os.platform() !== 'win32') {
         this.isRunningAsRoot =
           process.geteuid !== undefined &&
           process.geteuid() !== process.getuid()
@@ -287,8 +287,8 @@ export class UpdateChecker {
       this.isInstalledAsRoot = UpdateChecker.testEnvironment.isInstalledAsRoot
     } else {
       this.isInstalledAsRoot = false
-      /* istanbul ignore next */
-      if (os.platform() !== 'win32') /* c8 ignore start */ {
+      /* c8 ignore start */ /* istanbul ignore next */
+      if (os.platform() !== 'win32') {
         const dirname = path.dirname(fileURLToPath(import.meta.url))
         if (this.isInstalledGlobally &&
           isPathInside(dirname, '/usr/local')) {
@@ -387,8 +387,8 @@ export class UpdateChecker {
         // When running as root, skip writing the timestamp to avoid
         // later EACCES or EPERM. The effect is that the check will
         // be performed with each run.
-        /* istanbul ignore next */
-        if (os.platform() !== 'win32') /* c8 ignore start */ {
+        /* c8 ignore start */ /* istanbul ignore next */
+        if (os.platform() !== 'win32') {
           log.trace(`${this.constructor.name}:` +
           ` geteuid() ${process.geteuid()} != ${process.getuid()}`)
         } else {
