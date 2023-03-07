@@ -19,7 +19,7 @@ page.
 
 ## Prerequisites
 
-A recent [Node.js](https://nodejs.org) (>=14.13), since the TypeScript code
+A recent [Node.js](https://nodejs.org) (>=16.0.0), since the TypeScript code
 is compiled into ECMAScript 2020 code with ES6 modules.
 
 ## Install

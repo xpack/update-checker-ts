@@ -63,6 +63,7 @@ tsconfig.tsbuildinfo
 
 typedoc.json
 /docs/
+/assets/
 /scripts/
 
 #end

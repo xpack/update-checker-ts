@@ -38,13 +38,13 @@ https://github.com/xpack/update-checker-ts.git update-checker-ts.git
 
 The prerequisites are:
 
-- node >= 14.13
+- node >= 16.0.0
 - npm
 
 To ensure compatibility with older node, revert to an older one:
 
 ```sh
-nvm use --lts 14
+nvm use --lts 16
 code
 ```
 
@@ -266,7 +266,7 @@ and `/* c8 ignore start */` `/* c8 ignore stop */` for
 
 The continuous integration tests are performed via GitHub
 [Actions](https://github.com/xpack/update-checker-ts/actions/) on Ubuntu,
-Windows and macOS, using node 14, 16, 18.
+Windows and macOS, using node 16, 18.
 
 ## How to make new releases
 
@@ -294,7 +294,7 @@ No need to add a tag here, it'll be added when the release is created.
 Keep:
 
 - [`@types/node`](https://www.npmjs.com/package/@types/node?activeTab=versions)
-  locked to the oldest supported node (^14.18.36)
+  locked to the oldest supported node (^16.18.14)
   [release](https://nodejs.org/download/release/) available for Typescript.
 
 ### Determine the next version
