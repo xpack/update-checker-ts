@@ -451,8 +451,8 @@ export class UpdateChecker {
    * The notification message is composed using the values stored
    * in the instance properties.
    *
-   * The message is sent by writing to the log.
-   * This can be silenced by changing the log level.
+   * The message is sent out by writing to the log, using the `info` level.
+   * This can be silenced by lowering the log level.
    *
    * The notification message looks like this:
    *
@@ -461,7 +461,7 @@ export class UpdateChecker {
    * >>> Run 'npm install --global xpm@0.15.0' to update. <<<
    * ```
    *
-   * To customise this message, this function can be redefined
+   * To customise the notification message, this function can be redefined
    * in a class derived from this one.
    *
    * @override
