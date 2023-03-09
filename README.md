@@ -135,15 +135,16 @@ backwards incompatible changes are introduced to the public API.
 
 ### v2.0.0
 
-The project was migrated to TypeScript and the code is compiled into
+The project was migrated to TypeScript and the code is now compiled into
 **ES6** modules, that can be consumed by both TypeScript and JavaScript
-packages.
+packages. The minimum node engine was updated to >16.0.0.
 
 Other changes:
 
 - the test environment was moved outside the constructor
 - the parameter of `sendNotification()` was removed in favour of the
   instance property
+- the name of the environment variable was added to the constructor
 
 ## License
 
