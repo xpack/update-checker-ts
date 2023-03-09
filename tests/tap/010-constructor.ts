@@ -29,10 +29,7 @@ import { MockConsole } from '../mocks/mock-console.js'
 import { MockLogger } from '../mocks/mock-logger.js'
 import { PublicUpdateChecker } from '../mocks/public-update-checker.js'
 
-import {
-  UpdateChecker,
-  UpdateCheckerConstructorParameters
-} from '../../src/index.js'
+import { UpdateChecker } from '../../src/index.js'
 
 // ----------------------------------------------------------------------------
 
@@ -87,8 +84,8 @@ await test('constructor without values', (t) => {
 
   t.throws(
     () => {
-      const checker = new PublicUpdateChecker(
-        undefined as unknown as UpdateCheckerConstructorParameters)
+      // @ts-expect-error
+      const checker = new PublicUpdateChecker(undefined)
       checker.getLog().trace()
     },
     'assert(params)',
@@ -97,8 +94,8 @@ await test('constructor without values', (t) => {
 
   t.throws(
     () => {
-      const checker = new PublicUpdateChecker({
-      } as unknown as UpdateCheckerConstructorParameters)
+      // @ts-expect-error
+      const checker = new PublicUpdateChecker({})
       checker.getLog().trace()
     },
     'assert(params.log)',
@@ -107,9 +104,10 @@ await test('constructor without values', (t) => {
 
   t.throws(
     () => {
+      // @ts-expect-error
       const checker = new PublicUpdateChecker({
         log: mockLog
-      } as unknown as UpdateCheckerConstructorParameters)
+      })
       checker.getLog().trace()
     },
     'assert(params.packageName)',
@@ -118,10 +116,11 @@ await test('constructor without values', (t) => {
 
   t.throws(
     () => {
+      // @ts-expect-error
       const checker = new PublicUpdateChecker({
         log: mockLog,
         packageName: 'my-name'
-      } as unknown as UpdateCheckerConstructorParameters)
+      })
       checker.getLog().trace()
     },
     'assert(params.packageVersion)',
