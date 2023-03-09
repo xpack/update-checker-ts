@@ -140,6 +140,17 @@ export class UpdateChecker {
    */
   latestVersion: string | undefined = undefined
   /**
+   * @summary A string with the name of an environment variable.
+   *
+   * @description
+   * This variable provides an external method to control whether the
+   * checks are performed or not.
+   *
+   * If the variable is present in the environment, the update checks are
+   * disabled.
+   */
+  envVariableName: string
+  /**
    * @summary The absolute path to the timestamp file.
    *
    * @description
@@ -233,6 +244,13 @@ export class UpdateChecker {
     assert(params.packageVersion)
     this.packageVersion = params.packageVersion
 
+    // Turn non alphanumeric into underscores, and remove multiple
+    // subsequent underscores.
+    const defaultEnvVariableName =
+      `NO_${this.packageName}_UPDATE_NOTIFIER`.toUpperCase()
+        .replace(/[^A-Z0-9]/g, '_').replace(/__*/g, '_')
+    this.envVariableName = defaultEnvVariableName
+
     // Optional parameters.
     this.timestampsFolderPath = params.timestampsFolderPath ??
       timestampsFolderPath
@@ -316,9 +334,9 @@ export class UpdateChecker {
    * it a good chance to run in parallel.
    *
    * The operation is **not** started if it is considered
-   * not useful, like when running in a CI environment,
-   * when not running from a console, or the environment variable
-   * `NO_NPM_UPDATE_NOTIFIER` is defined.
+   * not useful, like when running in a CI environment, when not
+   * running from a console, or an environment variable like
+   * `NO_<packageName>_UPDATE_NOTIFIER` is defined.
    */
   async initiateVersionRetrieval (): Promise<void> {
     const log = this.log
@@ -326,11 +344,10 @@ export class UpdateChecker {
 
     this.latestVersionPromise = undefined
 
-    const envName = 'NO_NPM_UPDATE_NOTIFIER'
     if (this.checkUpdatesIntervalMilliseconds === 0 ||
       this.isCI ||
       !this.isTTY ||
-      this.processEnv[envName] !== undefined) {
+      this.processEnv[this.envVariableName] !== undefined) {
       log.trace(`${this.constructor.name}:` +
         ' do not fetch latest version number.')
       return
