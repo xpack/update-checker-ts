@@ -1,7 +1,7 @@
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/xpack/update-checker-ts)](https://github.com/xpack/update-checker-ts/blob/mater/package.json)
 [![npm (scoped)](https://img.shields.io/npm/v/@xpack/update-checker.svg)](https://www.npmjs.com/package/@xpack/update-checker/)
 [![license](https://img.shields.io/github/license/xpack/update-checker-ts.svg)](https://github.com/xpack/update-checker-ts/blob/xpack/LICENSE)
-[![TS-Standard - Typescript Standard Style Guide](https://badgen.net/badge/code%20style/ts-standard/blue?icon=typescript)](https://github.com/standard/ts-standard/)
+[![TS-Standard - TypeScript Standard Style Guide](https://badgen.net/badge/code%20style/ts-standard/blue?icon=typescript)](https://github.com/standard/ts-standard/)
 [![Actions Status](https://github.com/xpack/update-checker-ts/workflows/CI%20on%20Push/badge.svg)](https://github.com/xpack/update-checker-ts/actions/)
 [![GitHub issues](https://img.shields.io/github/issues/xpack/update-checker-ts.svg)](https://github.com/xpack/update-checker-ts/issues/)
 [![GitHub pulls](https://img.shields.io/github/issues-pr/xpack/update-checker-ts.svg)](https://github.com/xpack/update-checker-ts/pulls/)
@@ -47,10 +47,6 @@ To ensure compatibility with older node, revert to an older one:
 nvm use --lts 16
 code
 ```
-
-For the TypeScript configuration, please see:
-
-- [@tsconfig/node14](https://www.npmjs.com/package/@tsconfig/node14)
 
 ## Satisfy dependencies
 
@@ -295,7 +291,7 @@ Keep:
 
 - [`@types/node`](https://www.npmjs.com/package/@types/node?activeTab=versions)
   locked to the oldest supported node (^16.18.14)
-  [release](https://nodejs.org/download/release/) available for Typescript.
+  [release](https://nodejs.org/download/release/) available for TypeScript.
 
 ### Determine the next version
 
