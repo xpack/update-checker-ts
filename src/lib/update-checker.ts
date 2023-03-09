@@ -69,47 +69,6 @@ const defaultCheckUpdatesIntervalSeconds: number = 24 * 60 * 60
 // ============================================================================
 
 /**
- * Type of the object defining the parameters to be passed to the
- * **UpdateChecker** constructor.
- */
-export interface UpdateCheckerConstructorParameters {
-  /** A reference to a Logger instance. */
-  log: Logger
-  /**
-   * A string with the full package name, as from the `name`
-   * property in the `package.json` file.
-   */
-  packageName: string
-  /**
-   * A string with the package version, in semver, as from the
-   * `version` property in the `package.json` file.
-   */
-  packageVersion: string
-  /**
-   * A string with the name of an environment variable which, when present
-   * disables the update checks.
-   *
-   * If missing, `NO_<packageName>_UPDATE_NOTIFIER` is used.
-   */
-  envVariableName?: string
-  /**
-   * A string with the path to the folder where the timestamps are located.
-   *
-   * If missing, by default, timestamps are created in
-   * the `$HOME/.config/timestamps` folder.
-   */
-  timestampsFolderPath?: string
-  /**
-   * A number with the minimum interval between checks,
-   * in milliseconds,
-   *
-   * If missing, by default, checks are performed no sooner than
-   * 24 hours.
-   */
-  checkUpdatesIntervalSeconds?: number
-}
-
-/**
  * @ignore
  * @summary Environment used during tests.
  */
@@ -135,6 +94,7 @@ export interface UpdateCheckerTestEnvironment {
  */
 export class UpdateChecker {
   // --------------------------------------------------------------------------
+  // Instance properties.
 
   /**
    * @summary The latest version of the package.
@@ -236,7 +196,42 @@ export class UpdateChecker {
    * To improve testability, a mock environment can be passed via a
    * a static property.
    */
-  constructor (params: UpdateCheckerConstructorParameters) {
+  constructor (params: {
+    /** A reference to a Logger instance. */
+    log: Logger
+    /**
+     * A string with the full package name, as from the `name`
+     * property in the `package.json` file.
+     */
+    packageName: string
+    /**
+     * A string with the package version, in semver, as from the
+     * `version` property in the `package.json` file.
+     */
+    packageVersion: string
+    /**
+     * A string with the name of an environment variable which, when present
+     * disables the update checks.
+     *
+     * If missing, `NO_<packageName>_UPDATE_NOTIFIER` is used.
+     */
+    envVariableName?: string
+    /**
+     * A string with the path to the folder where the timestamps are located.
+     *
+     * If missing, by default, timestamps are created in
+     * the `$HOME/.config/timestamps` folder.
+     */
+    timestampsFolderPath?: string
+    /**
+     * A number with the minimum interval between checks,
+     * in milliseconds,
+     *
+     * If missing, by default, checks are performed no sooner than
+     * 24 hours.
+     */
+    checkUpdatesIntervalSeconds?: number
+  }) {
     assert(params)
 
     assert(params.log)
