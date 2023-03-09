@@ -335,14 +335,14 @@ await test('outdated version as root', async (t) => {
   t.end()
 })
 
-await test('outdated version NO_NPM_UPDATE_NOTIFIER', async (t) => {
+await test('outdated version NO_<>_UPDATE_NOTIFIER', async (t) => {
   const mockConsole = new MockConsole()
   const mockLog = new MockLogger({ console: mockConsole, level: 'info' })
 
   UpdateChecker.testEnvironment = {
     isCI: false,
     isTTY: true,
-    env: { NO_NPM_UPDATE_NOTIFIER: '' }, // <-
+    env: { NO_XPACK_UPDATE_CHECKER_UPDATE_NOTIFIER: '' }, // <-
     isRunningAsRoot: false,
     isInstalledAsRoot: false,
     isInstalledGlobally: false
