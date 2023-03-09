@@ -100,7 +100,8 @@ The check is skipped if one of the following conditions are met:
 - stdout is not a TTY
 - the process is running as root
 - the program is installed in system locations
-- the `NO_NPM_UPDATE_NOTIFIER` variable is present in the environment map
+- the `NO_<packageName>_UPDATE_NOTIFIER` variable is present in the
+  environment map (configurable)
 
 ### Reference
 

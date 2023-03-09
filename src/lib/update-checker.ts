@@ -86,6 +86,13 @@ export interface UpdateCheckerConstructorParameters {
    */
   packageVersion: string
   /**
+   * A string with the name of an environment variable which, when present
+   * disables the update checks.
+   *
+   * If missing, `NO_<packageName>_UPDATE_NOTIFIER` is used.
+   */
+  envVariableName?: string
+  /**
    * A string with the path to the folder where the timestamps are located.
    *
    * If missing, by default, timestamps are created in
@@ -249,7 +256,7 @@ export class UpdateChecker {
     const defaultEnvVariableName =
       `NO_${this.packageName}_UPDATE_NOTIFIER`.toUpperCase()
         .replace(/[^A-Z0-9]/g, '_').replace(/__*/g, '_')
-    this.envVariableName = defaultEnvVariableName
+    this.envVariableName = params.envVariableName ?? defaultEnvVariableName
 
     // Optional parameters.
     this.timestampsFolderPath = params.timestampsFolderPath ??
