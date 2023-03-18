@@ -2,10 +2,46 @@
 
 Changes in reverse chronological order.
 
-Refer to GitHub [issues](https://github.com/xpack/update-checker-js/issues/).
+Refer to GitHub [issues](https://github.com/xpack/update-checker-js/issues).
+
+## 2023-03-18
+
+* 08ba4d3 READMEs updates
+* 02010ff workflows renames
+* 7e57d17 package-lock.json update
+* 2d46f88 package.json cosmetics
+* 8ecad1a import cosmetics
+* f353b6f update licenses
+* b5ed29d eslint max-len
+
+## 2023-03-09
+
+* 97502f8 010-constructor.ts: remove *ConstructorParameters
+* 4796da9 update-checker.ts: move constructor type in place
+* 42d8f2c update-checker.ts: update typedoc
+* c367650 README update
+* 4dceb9c typedoc.json: cosmetics
+* a6171ae README update
+* 84a6855 020-checker.ts: update for new variable name
+* 89aa78e #1: make the environment variable configurable
+* 61f45bd #22: default variable includes the package name
+
+## 2023-03-07
+
+* ac004c3 .github/workflows update actions
+* b6ca962 bump node 16
+* d3a0c92 update-checker.ts: re-place c8 ignore start
 
 ## 2023-03-05
 
+* 90dbd85 update-checker.ts: rework istanbul ignore
+* 3773b33 update-checker.ts: rework c8 ignore start
+* 8848fd9 typedoc.yml: use node 14
+* 37e3ce4 update-checker.ts: rework c8 ignore start
+* 785a73d READMEs updates
+* 7590f2b CHANGELOG update
+* 8b235d9 .github/workflows update
+* a59d6a5 .vscode/settings.json
 * 8f27aff README update
 * da27147 READMEs updates
 * d12f2d0 .vscode/settings.json
