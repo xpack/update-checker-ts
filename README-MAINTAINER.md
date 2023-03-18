@@ -2,8 +2,8 @@
 [![npm (scoped)](https://img.shields.io/npm/v/@xpack/update-checker.svg)](https://www.npmjs.com/package/@xpack/update-checker/)
 [![license](https://img.shields.io/github/license/xpack/update-checker-ts.svg)](https://github.com/xpack/update-checker-ts/blob/xpack/LICENSE)
 [![TS-Standard - TypeScript Standard Style Guide](https://badgen.net/badge/code%20style/ts-standard/blue?icon=typescript)](https://github.com/standard/ts-standard/)
-[![Actions Status](https://github.com/xpack/update-checker-ts/workflows/CI%20on%20Push/badge.svg)](https://github.com/xpack/update-checker-ts/actions/)
-[![GitHub issues](https://img.shields.io/github/issues/xpack/update-checker-ts.svg)](https://github.com/xpack/update-checker-ts/issues/)
+[![CI on Push](https://github.com/xpack/update-checker-ts/actions/workflows/nodejs.yml/badge.svg)](https://github.com/xpack/update-checker-ts/actions/workflows/nodejs.yml)
+[![GitHub issues](https://img.shields.io/github/issues/xpack/update-checker-ts.svg)](https://github.com/xpack/update-checker-ts/issues)
 [![GitHub pulls](https://img.shields.io/github/issues-pr/xpack/update-checker-ts.svg)](https://github.com/xpack/update-checker-ts/pulls/)
 
 # Maintainer & developer info
@@ -22,7 +22,7 @@ The project uses two branches:
 To clone the `master` branch, use:
 
 ```sh
-mkdir ${HOME}/Work/vscode-extensions && cd ${HOME}/Work/vscode-extensions
+mkdir ${HOME}/Work/npm-modules && cd ${HOME}/Work/npm-modules
 git clone \
 https://github.com/xpack/update-checker-ts.git update-checker-ts.git
 ```
@@ -83,9 +83,9 @@ The current version is TypeScript 4:
 - <https://www.typescriptlang.org>
 - <https://www.typescriptlang.org/docs/handbook>
 
-Configured the compiler to produce `node16` files, which means
-ECMAScript6 with modules, that can be imported by any other project
-which uses ES6.
+The compiler is configured to produce `es2020` & `node16` files,
+which means ECMAScript6 with Node.js modules, that can be imported
+by any other ES6 project via `import`.
 
 For more details on how to configure `tsconfig.json`, please see:
 
@@ -109,22 +109,6 @@ project.
 
 Generally, to fit two editor windows side by side in a screen,
 all files should limit the line length to 80.
-
-```json
-  "eslintConfig": {
-    "rules": {
-      "max-len": [
-        "error",
-        80,
-        {
-          "ignoreUrls": true
-        }
-      ]
-    }
-  },
-```
-
-The same can be specified in each file:
 
 ```js
 /* eslint max-len: [ "error", 80, { "ignoreUrls": true } ] */
@@ -261,7 +245,7 @@ and `/* c8 ignore start */` `/* c8 ignore stop */` for
 ### Continuous Integration (CI)
 
 The continuous integration tests are performed via GitHub
-[Actions](https://github.com/xpack/update-checker-ts/actions/) on Ubuntu,
+[Actions](https://github.com/xpack/update-checker-ts/actions) on Ubuntu,
 Windows and macOS, using node 16, 18.
 
 ## How to make new releases
@@ -366,7 +350,7 @@ In this Git repo:
 
 The documentation site is built with [TypeDoc](https://typedoc.org/) and
 published in the project GitHub
-[Pages](https://xpack.github.io/update-checker-ts/).
+[Pages](https://xpack.github.io/update-checker-ts).
 
 The Web site deployment is performed automatically when pushing to the
 master branch, by a dedicated workflow in GitHub

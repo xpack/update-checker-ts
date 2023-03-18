@@ -8,7 +8,7 @@ This project provides a **TypeScript** Node.js **ES6** module with
 a class to check if a more recent version of a npm package is available.
 
 The open source project is hosted on GitHub as
-[xpack/update-checker-ts](https://github.com/xpack/update-checker-ts/).
+[xpack/update-checker-ts](https://github.com/xpack/update-checker-ts).
 
 ## Maintainer & developer info
 
@@ -42,11 +42,11 @@ reasons to install it globally.
 This section is intended for those who plan to use this module in their
 own projects.
 
-The `@xpack/update-checker` module can be imported in both TypeScript
+The `@xpack/update-checker` module can be imported into both TypeScript
 and JavaScript ES6 Node.js code with:
 
 ```typescript
-import { Logger } from '@xpack/update-checker'
+import { UpdateChecker } from '@xpack/update-checker'
 ```
 
 Note: as per the ES6 specs, importing ES6 modules in legacy
@@ -72,14 +72,16 @@ async main(argv) {
   // Read in the current package JSON (bring your own function here).
   const packageJson = await readPackageJson()
 
-  // Create on instance of notifier class, configured for the current package.
+  // Create on instance of notifier class, configured for the
+  // current package.
   const updateChecker = new UpdateChecker({
     log: log,
     packageName: packageJson.name,
     packageVersion: packageJson.version
   })
 
-  // Start the update checker, as an asynchronous function running in parallel.
+  // Start the update checker, as an asynchronous function
+  // running in parallel.
   await updateChecker.initiateVersionRetrieval()
 
   // ... Perform the application actual work.
@@ -108,7 +110,7 @@ The check is skipped if one of the following conditions are met:
 For more details on the available class definitions, including all methods,
 accessors, properties, etc,
 please see the TypeDoc
-[reference pages](https://xpack.github.io/update-checker-ts/).
+[reference pages](https://xpack.github.io/update-checker-ts).
 
 ## Known problems
 
@@ -124,7 +126,7 @@ The main client for this module is the `xpm` CLI application.
 
 The module is tested
 with 100% coverage and CI tested on every push via GitHub
-[Actions](https://github.com/xpack/update-checker-ts/actions/).
+[Actions](https://github.com/xpack/update-checker-ts/actions).
 
 ## Change log - incompatible changes
 
@@ -149,6 +151,6 @@ Other changes:
 ## License
 
 The original content is released under the
-[MIT License](https://opensource.org/licenses/MIT/),
+[MIT License](https://opensource.org/license/mit/),
 with all rights reserved to
-[Liviu Ionescu](https://github.com/ilg-ul/).
+[Liviu Ionescu](https://github.com/ilg-ul).
