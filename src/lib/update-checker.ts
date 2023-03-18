@@ -239,7 +239,7 @@ export class UpdateChecker {
     assert(params.log)
     this.log = params.log
 
-    const log = this.log
+    const { log } = this
     log.trace(`${this.constructor.name}.constructor()`)
 
     assert(params.packageName)
@@ -343,7 +343,7 @@ export class UpdateChecker {
    * `NO_<packageName>_UPDATE_NOTIFIER` is defined.
    */
   async initiateVersionRetrieval (): Promise<void> {
-    const log = this.log
+    const { log } = this
     log.trace(`${this.constructor.name}.initiateVersionRetrieval()`)
 
     this.latestVersionPromise = undefined
@@ -376,7 +376,7 @@ export class UpdateChecker {
    * current version, possibly notify and create a new timestamp.
    */
   async notifyIfUpdateIsAvailable (): Promise<void> {
-    const log = this.log
+    const { log } = this
     log.trace(`${this.constructor.name}.notifyIfUpdateIsAvailable()`)
 
     if (this.latestVersionPromise == null) {
@@ -464,7 +464,7 @@ export class UpdateChecker {
    * @override
    */
   sendNotification (): void {
-    const log = this.log
+    const { log } = this
     log.trace(`${this.constructor.name}.sendNotification()`)
 
     const isGlobalStr = this.isInstalledGlobally ? ' --global' : ''
@@ -497,7 +497,7 @@ export class UpdateChecker {
     ageMilliseconds: number
   ): Promise<boolean> {
     assert(ageMilliseconds > 0)
-    const log = this.log
+    const { log } = this
 
     const stats = await this.readTimestampFileStats()
     if (stats != null) {
@@ -522,7 +522,7 @@ export class UpdateChecker {
    * @returns A promise that resolves to a fs.Stats object or null.
    */
   protected async readTimestampFileStats (): Promise<fs.Stats | null> {
-    const log = this.log
+    const { log } = this
 
     try {
       const stats = await fsPromises.stat(this.timestampFilePath)
@@ -545,7 +545,7 @@ export class UpdateChecker {
    * The main reason for this to be a separate function is testability.
    */
   protected async clearTimestamp (): Promise<void> {
-    const log = this.log
+    const { log } = this
     log.trace(`${this.constructor.name}.clearTimestamp()`)
 
     await deleteAsync(this.timestampFilePath, { force: true })
@@ -560,7 +560,7 @@ export class UpdateChecker {
    * Create an empty file. The timestamp is the creation date.
    */
   protected async createTimestamp (): Promise<void> {
-    const log = this.log
+    const { log } = this
     log.trace(`${this.constructor.name}.createTimestamp()`)
 
     // Ensure the parent folder is present.
