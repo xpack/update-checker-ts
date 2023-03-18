@@ -58,11 +58,11 @@
   "author": {
     "name": "Liviu Ionescu",
     "email": "ilg@livius.net",
-    "url": "https://github.com/ilg-ul/"
+    "url": "https://github.com/ilg-ul"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xpack/update-checker-js/issues/"
+    "url": "https://github.com/xpack/update-checker-js/issues"
   },
   "homepage": "https://xpack.github.io/update-checker-ts/",
   "dependencies": {
