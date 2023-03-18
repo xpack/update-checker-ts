@@ -24,7 +24,7 @@ import { Writable } from 'node:stream'
 
 // ============================================================================
 
-// https://nodejs.org/docs/latest-v14.x/api/console.html
+// https://nodejs.org/docs/latest-v16.x/api/console.html
 export class MockConsole extends Console {
   lines: string[]
 

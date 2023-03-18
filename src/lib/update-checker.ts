@@ -20,7 +20,7 @@
 
 // ----------------------------------------------------------------------------
 
-// https://nodejs.org/docs/latest-v14.x/api/
+// https://nodejs.org/docs/latest-v16.x/api/
 import { strict as assert } from 'node:assert'
 import * as fs from 'node:fs'
 import * as os from 'node:os'
