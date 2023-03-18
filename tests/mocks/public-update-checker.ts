@@ -9,6 +9,8 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
+/* eslint max-len: [ "error", 80, { "ignoreUrls": true } ] */
+
 // ----------------------------------------------------------------------------
 
 import * as fs from 'node:fs'
