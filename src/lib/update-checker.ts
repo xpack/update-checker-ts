@@ -56,10 +56,6 @@ import * as semver from 'semver'
 
 // ----------------------------------------------------------------------------
 
-const fsPromises = fs.promises
-
-// ----------------------------------------------------------------------------
-
 // Modules that return a Boolean. Used in place.
 
 // Default variables.
@@ -525,7 +521,7 @@ export class UpdateChecker {
     const { log } = this
 
     try {
-      const stats = await fsPromises.stat(this.timestampFilePath)
+      const stats = await fs.promises.stat(this.timestampFilePath)
       log.trace(`${this.constructor.name}.readTimestamp() ok`)
       return stats
     } catch (err: any) {
@@ -568,7 +564,7 @@ export class UpdateChecker {
 
     // Create an empty file; the content is ignored,
     // only the modified date is of interest.
-    const fd = await fsPromises.open(this.timestampFilePath, 'w')
+    const fd = await fs.promises.open(this.timestampFilePath, 'w')
     await fd.close()
   }
 }
