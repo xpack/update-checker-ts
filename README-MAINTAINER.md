@@ -22,7 +22,7 @@ The project uses two branches:
 To clone the `master` branch, use:
 
 ```sh
-mkdir ${HOME}/Work/npm-modules && cd ${HOME}/Work/npm-modules
+mkdir ${HOME}/Work/npm-packages && cd ${HOME}/Work/npm-packages
 git clone \
 https://github.com/xpack/update-checker-ts.git update-checker-ts.git
 ```
@@ -156,13 +156,13 @@ A full test run, including coverage, looks like:
 ```console
 % npm run test-100-c8
 
-> @xpack/update-checker@2.0.0 pretest-100-c8 /Users/ilg/My Files/WKS Projects/xpack.github/npm-modules/update-checker-ts.git
+> @xpack/update-checker@2.0.0 pretest-100-c8 /Users/ilg/My Files/WKS Projects/xpack.github/npm-packages/update-checker-ts.git
 > npm run lint
 
-> @xpack/update-checker@2.0.0 lint /Users/ilg/My Files/WKS Projects/xpack.github/npm-modules/update-checker-ts.git
+> @xpack/update-checker@2.0.0 lint /Users/ilg/My Files/WKS Projects/xpack.github/npm-packages/update-checker-ts.git
 > ts-standard src
 
-> @xpack/update-checker@2.0.0 test-100-c8 /Users/ilg/My Files/WKS Projects/xpack.github/npm-modules/update-checker-ts.git
+> @xpack/update-checker@2.0.0 test-100-c8 /Users/ilg/My Files/WKS Projects/xpack.github/npm-packages/update-checker-ts.git
 > npm run test-tap-coverage-100-c8 -s
 
 (node:9919) ExperimentalWarning: --experimental-loader is an experimental feature. This feature could change at any time
@@ -192,7 +192,7 @@ To run a specific test with more verbose output, use `npm run tap`:
 ```console
 % npm run tap tests/tap/010-constructor.ts
 
-> @xpack/update-checker@2.0.0 tap /Users/ilg/My Files/WKS Projects/xpack.github/npm-modules/update-checker-ts.git
+> @xpack/update-checker@2.0.0 tap /Users/ilg/My Files/WKS Projects/xpack.github/npm-packages/update-checker-ts.git
 > tap --reporter=spec "tests/tap/010-constructor.ts"
 
 (node:10352) ExperimentalWarning: --experimental-loader is an experimental feature. This feature could change at any time
