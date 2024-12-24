@@ -46,7 +46,7 @@ import isInstalledGlobally from 'is-installed-globally'
 import isPathInside from 'is-path-inside'
 
 // https://www.npmjs.com/package/make-dir
-import makeDir from 'make-dir'
+import { makeDirectory } from 'make-dir'
 
 // https://www.npmjs.com/package/latest-version
 import latestVersionPromise from 'latest-version'
@@ -287,7 +287,8 @@ export class UpdateChecker {
       /* c8 ignore start */ /* istanbul ignore next */
       if (os.platform() !== 'win32') {
         this.isRunningAsRoot =
-          process.geteuid !== undefined &&
+          process?.geteuid !== undefined &&
+          process?.getuid !== undefined &&
           process.geteuid() !== process.getuid()
       } else {
         this.isRunningAsRoot = false
@@ -405,7 +406,9 @@ export class UpdateChecker {
         // later EACCES or EPERM. The effect is that the check will
         // be performed with each run.
         /* c8 ignore start */ /* istanbul ignore next */
-        if (os.platform() !== 'win32') {
+        if (os.platform() !== 'win32' &&
+          process?.geteuid !== undefined &&
+          process?.getuid !== undefined) {
           log.trace(`${this.constructor.name}:` +
           ` geteuid() ${process.geteuid()} != ${process.getuid()}`)
         } else {
@@ -560,7 +563,7 @@ export class UpdateChecker {
     log.trace(`${this.constructor.name}.createTimestamp()`)
 
     // Ensure the parent folder is present.
-    await makeDir(path.dirname(this.timestampFilePath))
+    await makeDirectory(path.dirname(this.timestampFilePath))
 
     // Create an empty file; the content is ignored,
     // only the modified date is of interest.

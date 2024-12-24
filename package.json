@@ -1,7 +1,7 @@
 {
   "name": "@xpack/update-checker",
   "version": "1.2.0",
-  "description": "Check if a newer version of a npm package is available",
+  "description": "A Node.js CommonJS/ES6 module to check if a newer version of a npm package is available",
   "type": "module",
   "exports": {
     "node": {
@@ -14,44 +14,44 @@
   "module": "./esm/index.js",
   "types": "./esm/index.d.ts",
   "scripts": {
-    "compile-watch": "tsc --build --verbose --watch src tests",
+    "compile-watch": "tsc --build --verbose --watch src",
     "fix": "ts-standard --fix src tests",
-    "compile": "tsc --build --verbose src tests",
+    "compile": "tsc --build --verbose src",
     "npm-install": "npm install",
     "npm-link": "npm link",
     "npm-link-deps": "npm link @xpack/logger",
+    "npm-link-helpers": "npm link @xpack/npm-packages-helper @xpack/docusaurus-template-liquid",
     "npm-outdated": "npm outdated",
     "npm-update": "npm update",
+    "npm-pack": "npm pack",
     "npm-version-patch": "npm version patch",
     "npm-version-minor": "npm version minor",
     "postversion": "git push origin --all && git push origin --tags",
-    "package": "npm pack",
     "git-log": "git log --pretty='%cd * %h %s' --date=short",
     "lint": "ts-standard src",
     "prepare": "npm run compile && npm run lint",
-    "pretest": "npm run lint",
-    "pretest-100": "npm run lint",
-    "pretest-100-c8": "npm run lint",
-    "tap": "tap --reporter=spec",
-    "tap-c8": "c8 tap --reporter=spec",
-    "test-tap": "tap",
-    "test-tap-coverage": "tap --coverage",
-    "test-tap-coverage-c8": "c8 -- tap",
-    "test-tap-coverage-100": "tap --coverage --100",
-    "test-tap-coverage-100-c8": "c8 --100 -- tap",
-    "test": "npm run test-tap -s",
-    "test-100": "npm run test-tap-coverage-100 -s",
-    "test-100-c8": "npm run test-tap-coverage-100-c8 -s",
-    "dev-cycle": "npm run fix && npm run compile && npm run test-100-c8",
+    "pretest-coverage": "npm run lint",
+    "pretest-no-coverage": "npm run lint",
+    "test-coverage": "tap --show-full-coverage",
+    "test-no-coverage": "tap --disable-coverage",
+    "tap": "tap --reporter=tap",
+    "test": "npm run test-coverage",
+    "test-ci": "npm run test-coverage",
+    "prepublishOnly": "npm run lint && npm run test",
+    "postpublish": "git push origin --follow-tags",
+    "show-versions": "echo $(which node) $(node --version) && echo $(which npm) $(npm --version)",
+    "dumpconf": "env | sort | uniq",
+    "dev-cycle": "npm run fix && npm run compile && npm run test",
     "typedoc": "typedoc --logLevel Verbose",
     "safari": "open -a Safari docs/index.html",
-    "clean": "del-cli esm docs 'tests/**/esm' 'src/**/*.d.ts' 'src/**/*.d.ts.map' 'src/**/*.js' 'src/**/*.js.map' 'tests/**/*.d.ts' 'tests/**/*.d.ts.map' 'tests/**/*.js' 'tests/**/*.js.map' '**/tsconfig.tsbuildinfo' .nyc_output coverage",
+    "clean": "del-cli cjs 'tests/**/cjs' 'src/**/*.d.ts' 'src/**/*.d.ts.map' 'src/**/*.js' 'src/**/*.js.map' 'tests/**/*.d.ts' 'tests/**/*.d.ts.map' 'tests/**/*.js' 'tests/**/*.js.map' '**/tsconfig.tsbuildinfo' .nyc_output coverage",
     "deep-clean": "npm run clean && rm -rf node_modules package-lock.json",
-    "npm-version": "echo $(which node) $(node --version) && echo $(which npm) $(npm --version)"
+    "npm-version": "echo $(which node) $(node --version) && echo $(which npm) $(npm --version)",
+    "generate-top-commons": "bash node_modules/@xpack/npm-packages-helper/maintenance-scripts/generate-top-commons.sh"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xpack/update-checker-js.git"
+    "url": "git+https://github.com/xpack/update-checker-ts.git"
   },
   "keywords": [
     "cli",
@@ -65,45 +65,39 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xpack/update-checker-js/issues"
+    "url": "https://github.com/xpack/update-checker-ts/issues"
   },
   "homepage": "https://xpack.github.io/update-checker-ts/",
   "dependencies": {
     "@xpack/logger": "^5.0.4",
-    "del": "^7.0.0",
-    "is-ci": "^3.0.1",
-    "is-installed-globally": "0.4.0",
+    "del": "^8.0.0",
+    "is-ci": "^4.1.0",
+    "is-installed-globally": "1.0.0",
     "is-path-inside": "^4.0.0",
-    "latest-version": "^7.0.0",
-    "make-dir": "^3.1.0",
+    "latest-version": "^9.0.0",
+    "make-dir": "^5.0.0",
     "semver": "^7.3.8"
   },
   "devDependencies": {
-    "@types/is-ci": "^3.0.0",
-    "@types/node": "^16.18.14",
-    "@types/tap": "^15.0.8",
-    "c8": "^7.13.0",
-    "del-cli": "^5.0.0",
-    "standard": "^17.0.0",
-    "tap": "^16.3.4",
-    "ts-node": "^10.9.1",
+    "@types/is-ci": "^3.0.4",
+    "@types/node": "^18.19.68",
+    "@types/tap": "^15.0.12",
+    "del-cli": "^6.0.0",
+    "json": "^11.0.0",
+    "liquidjs": "^10.19.1",
+    "standard": "^17.1.2",
+    "tap": "^21.0.1",
+    "ts-node": "^10.9.2",
     "ts-standard": "^12.0.2",
-    "typedoc": "^0.24.4",
-    "typescript": "^4.9.5"
+    "typedoc": "^0.27.5",
+    "typescript": "^5.6.3"
   },
   "bundleDependencies": [],
   "tap": {
-    "check-coverage": false,
-    "coverage": false,
     "files": [
       "tests/tap/*.ts"
     ],
-    "node-arg": [
-      "--loader=ts-node/esm"
-    ],
-    "reporter": "classic",
-    "timeout": 30,
-    "ts": true
+    "reporter": "base"
   },
   "eslintConfig": {
     "rules": {
@@ -118,11 +112,12 @@
   },
   "ts-standard": {
     "ignore": [
+      "/website/",
       "**/*.d.ts",
       "**/*.js"
     ]
   },
   "engines": {
-    "node": " >=16.0.0"
+    "node": " >=18.0.0"
   }
 }

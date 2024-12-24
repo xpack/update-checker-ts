@@ -1,10 +1,13 @@
+# DO NOT EDIT!
+# Automatically generated from npm-packages-helper/templates
+
 # Simple workflow for deploying static content to GitHub Pages
 name: GitHub Pages
 
 on:
   # Runs on pushes, if all conditions are met:
   push:
-    # ... on the master branch ...
+    # ... on the website branch ...
     branches:
       - 'master'
     # ... skip tags only ...
@@ -12,6 +15,7 @@ on:
       - '**'
     # ... any of these files changes ...
     paths:
+      - 'website/**'
       - 'typedoc.json'
       - '**/tsconfig*.json'
       - 'src/**/*.ts'
@@ -39,20 +43,21 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
         # https://github.com/actions/checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 3
+          # The full history, required to compute lastUpdatedAt
+          fetch-depth: 0
 
       - name: Use Nodejs
         # https://github.com/actions/setup-node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 20
 
       - name: Install dependencies
         run: npm install
@@ -62,11 +67,11 @@ jobs:
 
       - name: Setup Pages
         # https://github.com/actions/configure-pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         # https://github.com/actions/upload-pages-artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
           path: './docs'
@@ -74,4 +79,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         # https://github.com/actions/deploy-pages
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4

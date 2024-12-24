@@ -13,7 +13,6 @@
     "node_modules/**"
   ],
   "githubPages": true,
-  "gaID": "341760653",
   "includeVersion": true,
   "intentionallyNotExported": [
     "Logger",

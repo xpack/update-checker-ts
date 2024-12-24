@@ -1,3 +1,6 @@
+# DO NOT EDIT!
+# Automatically generated from npm-packages-helper/templates
+
 # https://help.github.com/en/actions
 
 # https://github.com/actions
@@ -9,17 +12,21 @@ name: CI on Push
 on:
   push:
     branches:
-      - '**'
+      - 'master'
+      - 'development'
     tags-ignore:
       - '**'
     paths-ignore:
       - 'docs/**'
+      - 'website/**'
       - 'LICENSE'
       - '**.md'
       - '.gitignore'
       - '.npmignore'
       - '.vscode/**'
       - '.github/FUNDING.yml'
+      - '.github/workflows/publish-github-pages*.yml'
+      - '.github/workflows/trigger-publish-github-pages*.yml'
       - 'typedoc.json'
 
 jobs:
@@ -29,21 +36,21 @@ jobs:
 
     strategy:
       matrix:
-        # nvm ls-remote --lts | grep Latest
-        node-version: [^16.20.0, ^18.15.0]
-        # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
-        os: [ubuntu-22.04, windows-2022, macos-12]
+        # https://github.com/actions/setup-node
+        node-version: [18, 20, 22]
+        # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
+        os: [ubuntu-24.04, macos-13, macos-14, windows-2022]
 
     steps:
     - name: Checkout
       # https://github.com/actions/checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 1
 
     - name: Setup Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
       # https://github.com/actions/setup-node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
 
@@ -51,12 +58,12 @@ jobs:
       run: |
         node --version
         npm --version
-        env
+        env | sort
 
     - name: Install dependencies
       run: npm ci
 
-    - name: Run tests
-      run: npm run test-100-c8
+    - name: Run test
+      run: npm run test-ci
       env:
         CI: true
