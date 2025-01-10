@@ -110,7 +110,7 @@ The check is skipped if one of the following conditions are met:
 For more details on the available class definitions, including all methods,
 accessors, properties, etc,
 please see the TypeDoc
-[reference pages](https://xpack.github.io/update-checker-ts).
+[reference pages](https://xpack.github.io/update-checker-ts/).
 
 ## Known problems
 
